@@ -9,5 +9,3 @@ sequenceDiagram
     activate palvelin
     palvelin-->>selain: STATUS 201, {"message":"note created"}
     deactivate palvelin
-
-    Note right of selain: 
