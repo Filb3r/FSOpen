@@ -1,29 +1,35 @@
 ```mermaid
 
 sequenceDiagram
-    participant browser
-    participant server
+    participant selain
+    participant palvelin
     
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
-    activate server
-    server-->>browser: HTML document
-    deactivate server
+    Note right of selain: Käyttäjä kirjoittaa uuden muistiinpanon ja painaa save nappia.
+    selain->>palvelin: POST https://studies.cs.helsinki.fi/exampleapp/notes
+    activate palvelin
+    palvelin-->>selain: Status 302 (uudelleenohjaus)
+    deactivate palvelin
     
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
-    activate server
-    server-->>browser: the css file
-    deactivate server
+    selain->>palvelin: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate palvelin
+    palvelin-->>selain: HTML tiedosto
+    deactivate palvelin
     
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
-    activate server
-    server-->>browser: the JavaScript file
-    deactivate server
-    
-    Note right of browser: The browser starts executing the JavaScript code that fetches the JSON from the server
-    
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
-    activate server
-    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
-    deactivate server    
+    selain->>palvelin: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate palvelin
+    palvelin-->>selain: css tiedosto
+    deactivate palvelin
 
-    Note right of browser: The browser executes the callback function that renders the notes 
+    selain->>palvelin: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate palvelin
+    palvelin-->>selain: javascript tiedosto
+    deactivate palvelin 
+
+    Note right of selain: Selain suorittaa javascriptin, joka hakee muistiinpanot palvelimelta.  
+
+    selain->>palvelin: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate palvelin
+    palvelin-->>selain: data.json tiedosto
+    deactivate palvelin 
+
+    Note right of selain: Lopuksi kaikki muistiinpanot näkyy sivulla.
