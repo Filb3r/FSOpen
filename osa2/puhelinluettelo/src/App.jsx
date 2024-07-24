@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
-import axios from 'axios'
+import personService from './services/Persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -11,10 +11,10 @@ const App = () => {
   const [nameFilter, setNameFilter] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+    personService
+      .getAll()
       .then(response => {
-        setPersons(response.data)
+        setPersons(response)
       })
   }, [])
 
@@ -26,14 +26,32 @@ const App = () => {
       number: newNumber
     }
 
-    const nameExists = persons.some(person => person.name === newName)
+    const nameExists = persons.find(person => person.name === newName)
     
-    if(nameExists){
-      alert(`${newName} is already added to phonebook`)
+    if(!nameExists){
+      personService
+      .create(nameObject)
+      .then(response => {
+        setPersons(persons.concat(response))
+        setNewName('')
+        setNewNumber('')
+      })
     } else {
-      setPersons(persons.concat(nameObject))
-      setNewName('')
-      setNewNumber('')
+      if (window.confirm(`${nameObject.name} is already added, do you want to replace old number with a new one?`)){
+        personService
+          .updateName(nameExists.id, nameObject)
+          .then(response => {
+            setPersons(persons.map(person => person.id !== nameExists.id ? person : response))
+          })
+    }
+  }
+  }
+
+  const deleteName = (person) => {
+    if (window.confirm(`Do you want to delete ${person.name}`)){
+      personService
+      .deleteId(person.id)
+      setPersons(persons.filter(n => n.id !== person.id))
     }
   }
 
@@ -67,10 +85,9 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-      <Persons personsToShow={personsToShow}/>
+      <Persons personsToShow={personsToShow} deleteName={deleteName}/>
     </div>
   )
-
 }
 
 export default App
