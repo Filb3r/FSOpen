@@ -3,12 +3,15 @@ import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import personService from './services/Persons'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [nameFilter, setNameFilter] = useState('')
+  const [verifyMessage, setVerifyMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -33,8 +36,12 @@ const App = () => {
       .create(nameObject)
       .then(response => {
         setPersons(persons.concat(response))
+        setVerifyMessage(`${nameObject.name} added!`)
         setNewName('')
         setNewNumber('')
+        setTimeout(() => {
+          setVerifyMessage(null)
+        }, '3000')
       })
     } else {
       if (window.confirm(`${nameObject.name} is already added, do you want to replace old number with a new one?`)){
@@ -42,6 +49,16 @@ const App = () => {
           .updateName(nameExists.id, nameObject)
           .then(response => {
             setPersons(persons.map(person => person.id !== nameExists.id ? person : response))
+            setVerifyMessage(`${nameObject.name} updated!`)
+            setTimeout(() => {
+              setVerifyMessage(null)
+            }, '3000')
+          })
+          .catch(error => {
+            setErrorMessage(`Information of ${nameObject.name} has already been removed from the server!`)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, '3000')
           })
     }
   }
@@ -51,7 +68,13 @@ const App = () => {
     if (window.confirm(`Do you want to delete ${person.name}`)){
       personService
       .deleteId(person.id)
-      setPersons(persons.filter(n => n.id !== person.id))
+      .then(() => {
+        setPersons(persons.filter(n => n.id !== person.id))
+        setVerifyMessage(`${person.name} deleted!`)
+        setTimeout(() => {
+          setVerifyMessage(null)
+        }, '3000')
+      })
     }
   }
 
@@ -67,11 +90,13 @@ const App = () => {
     setNameFilter(event.target.value)
   }
 
+
   const personsToShow = persons.filter(person => person.name.toLowerCase().includes(nameFilter.toLowerCase()))
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification verifyMessage={verifyMessage} errorMessage={errorMessage}/>
       <Filter nameFilter={nameFilter} 
       handleNameFiltering={handleNameFiltering}
       />
