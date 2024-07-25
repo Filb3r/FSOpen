@@ -12,8 +12,9 @@ const App = () => {
     axios
       .get('https://studies.cs.helsinki.fi/restcountries/api/all')
       .then(response => {
-        const countryNames = response.data.map(country => country.name.common)
-        setCountries(countryNames)
+        //console.log(response.data)
+        //const countryNames = response.data.map(country => country.name.common)
+        setCountries(response.data)
       })
   }, [])
 
@@ -23,12 +24,10 @@ const App = () => {
     setCountry(event.target.value)
   }
 
-///  console.log({countries})
-
   return (
     <div>
     <Finder country={country} handleCountryChange={handleCountryChange}/>
-    <Countries countries={countries} country={country}/>
+    <Countries countries={countries} country={country} setCountry={setCountry}/>
     </div>
   )
 }

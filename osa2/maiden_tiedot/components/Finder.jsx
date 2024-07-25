@@ -4,7 +4,6 @@ const Finder = ({country, handleCountryChange}) => {
             <input value={country} onChange={handleCountryChange}/>
         </p>
     )
-
 }
 
 export default Finder
