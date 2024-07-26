@@ -13,7 +13,7 @@ const CountryWeather = ({country}) => {
             .catch(error => {
                 console.log(error)
             })
-    }, [])
+    }, [country.latlng])
 
     return(
         <div>
