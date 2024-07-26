@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import Finder from '../components/Finder'
-import axios from 'axios'
-import Countries from '../components/Countries'
+import Finder from './components/Finder'
+import Countries from './components/Countries'
+import Country from './services/Country'
 
 
 const App = () => {
@@ -9,13 +9,14 @@ const App = () => {
   const [countries, setCountries] = useState([])
 
   useEffect(() => {
-    axios
-      .get('https://studies.cs.helsinki.fi/restcountries/api/all')
+    Country
+      .getAll()
       .then(response => {
-        //console.log(response.data)
-        //const countryNames = response.data.map(country => country.name.common)
-        setCountries(response.data)
+        setCountries(response)
       })
+      .catch(error => {
+        console.log(error)
+      }) 
   }, [])
 
   const handleCountryChange = (event) => {

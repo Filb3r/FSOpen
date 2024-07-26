@@ -1,3 +1,5 @@
+import CountryWeather from './CountryWeather'
+
 const Countries = ({countries, country, setCountry}) => {
     const allCountryNames = countries.map(c => c.name.common)
     const filteredCountries = allCountryNames.filter(c => c.toLowerCase().includes(country.toLowerCase()))
@@ -19,7 +21,6 @@ const Countries = ({countries, country, setCountry}) => {
             </div>
         )
     } else if (filteredCountries.length === 1){
-        
         const findCountry = countries.find(cc => cc.name.common === filteredCountries[0])
 
         return(
@@ -34,6 +35,7 @@ const Countries = ({countries, country, setCountry}) => {
                     ))}
                 </ul>
                 <img src={findCountry.flags.png} alt="flag"/>
+                <CountryWeather country={findCountry}/>
             </div>
         )
     }
