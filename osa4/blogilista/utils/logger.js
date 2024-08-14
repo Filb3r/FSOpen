@@ -4,8 +4,6 @@ const info = (...params) => {
 
 const error = (...params) => {
     console.log(...params)
-
-    next(error)
 }
 
 module.exports = {
