@@ -43,6 +43,12 @@ const App = () => {
           setVerifyMessage(null)
         }, '3000')
       })
+      .catch(error => {
+        setErrorMessage(error.message)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, '3000')
+      })
     } else {
       if (window.confirm(`${nameObject.name} is already added, do you want to replace old number with a new one?`)){
         personService
