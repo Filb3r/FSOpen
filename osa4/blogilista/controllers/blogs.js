@@ -10,7 +10,7 @@ blogsRouter.get('/', (request,response, next) => {
       })
 })
 
-blogsRouter.post('/:id', (request,response) => {
+blogsRouter.post('/', (request,response) => {
   const blog = new Blog(request.body)
 
   blog
@@ -20,5 +20,7 @@ blogsRouter.post('/:id', (request,response) => {
     })
     .catch(error => next(error))
 })
+
+blogsRouter
 
 module.exports = blogsRouter
