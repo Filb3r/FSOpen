@@ -1,2 +1,2 @@
 ------> Node-sovellusten testaaminen ALOITUS
-    -
+    -4,6 step 4 total likes functio!
