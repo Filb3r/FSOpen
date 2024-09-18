@@ -85,6 +85,7 @@ describe('total likes', () => {
 })
 
 describe('favorite blogpost by likes', () => {
+
   test('when only one blog, it returns that', () => {
     const result = listHelper.favoriteBlog(listWithOneBlog)
     assert.strictEqual(result.likes, 5)
@@ -92,7 +93,21 @@ describe('favorite blogpost by likes', () => {
 
   test('when list has more than one blog, return the one with most likes', () => {
     const result = listHelper.favoriteBlog(blogs)
-    console.log(result)
     assert.strictEqual(result.likes, 12)
+  })
+})
+
+describe('Who has most blogposts', () => {
+  
+  test('When list has multiple blogs', () => {
+    const result = listHelper.mostBlogs(blogs)
+  })
+})
+
+describe('Who has most likes', () => {
+  
+  test('When list has multiple blogs', () => {
+    const result = listHelper.mostLikes(blogs)
+    assert.strictEqual(result.likes, 17)
   })
 })
