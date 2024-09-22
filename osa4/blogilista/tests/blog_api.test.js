@@ -1,4 +1,4 @@
-const { test, after, beforeEach } = require('node:test')
+const { test, after, beforeEach, describe } = require('node:test')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
@@ -24,26 +24,81 @@ const initialBlogs =[
 
 beforeEach(async () => {
     await Blog.deleteMany({})
-    let blogObject = new Blog(initialBlogs[0])
-    await blogObject.save()
-    blogObject = new Blog(initialBlogs[1])
-    await blogObject.save()
+    console.log('cleared')
+
+    const blogObjects = initialBlogs
+      .map(blog => new Blog(blog))
+    
+      const promiseArray = blogObjects.map(blog => blog.save())
+      await Promise.all(promiseArray)
 })
 
-test('blogs are returned as json', async() => {
+describe('Step 1 tests', () => {
+  test('blogs are returned as json', async() => {
+      await api
+          .get('/api/blogs')
+          .expect(200)
+          .expect('Content-Type', /application\/json/)
+  })
+
+  test('there are two blogs', async() => {
+      const response = await api.get('/api/blogs')
+
+      assert.strictEqual(response.body.length, initialBlogs.length)
+  })
+})
+
+describe('Step 2 tests', () => {
+test('every blogs id key should be "id" and not "_id"', async() => {
+  const response = await api.get('/api/blogs')
+
+  response.body.forEach(blog => {
+    assert.ok(Object.keys(blog).includes('id'))
+  })
+})
+})
+
+describe('Step 3,4 and 5 tests', () => {
+  test('check if posting a blog works', async() => {
+    const blogPost = {
+      "title": "Testing",
+      "author": "Tester Guy",
+      "url": "www.testing.com",
+      "likes": 605
+    }
+  
     await api
-        .get('/api/blogs')
-        .expect(200)
-        .expect('Content-Type', /application\/json/)
-})
-
-test('there are two blogs', async() => {
+      .post('/api/blogs')
+      .send(blogPost)
+      .expect(201)
+  
     const response = await api.get('/api/blogs')
+    assert.strictEqual(response.body.length, (initialBlogs.length + 1))
+  })
 
-    assert.strictEqual(response.body.length, initialBlogs.length)
-})
+  test('if no likes are given, it should return 0', async() => {
+    const blogPost = {
+      "title": "Testing",
+      "author": "Tester Guy",
+      "url": "www.testing.com"
+    }
+  
+    await api
+      .post('/api/blogs')
+      .send(blogPost)
+      .expect(201)
+  
+    const response = await api.get('/api/blogs')
+    const postedBlog = response.body[response.body.length - 1]
+    assert.strictEqual(postedBlog.likes, 0)
 
-test('')
+    await api
+      .delete(`/api/blogs/${postedBlog.id}`)
+      .expect(204)
+  })
+
+
+  })
 
 
 after(async () => {
