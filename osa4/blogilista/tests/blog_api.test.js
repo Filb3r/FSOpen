@@ -97,9 +97,21 @@ describe('Step 3,4 and 5 tests', () => {
       .expect(204)
   })
 
+  test('if title or url not given, expect 400 bad request', async() => {
+    const blogPost = {
+      "title": "test title",
+      "author": "Tester Guy",
+      "likes": 45
+    }
 
+    await api
+      .post('/api/blogs')
+      .send(blogPost)
+      .expect(400)
+  })
   })
 
+  describe('Check if updating works')
 
 after(async () => {
     await mongoose.connection.close()
