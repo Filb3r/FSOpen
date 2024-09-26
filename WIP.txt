@@ -1,1 +1,5 @@
-------> Käyttäjien hallinta
+------> Käyttäjien hallinta, TOKEN
+
+DONE: user.js model
+
+-4.17: blogilistan laajennus, step5 ----->

@@ -24,13 +24,13 @@ const initialBlogs =[
 
 beforeEach(async () => {
     await Blog.deleteMany({})
-    console.log('cleared')
+    console.log('cleared blogs')
 
     const blogObjects = initialBlogs
       .map(blog => new Blog(blog))
     
-      const promiseArray = blogObjects.map(blog => blog.save())
-      await Promise.all(promiseArray)
+    const promiseArray = blogObjects.map(blog => blog.save())
+    await Promise.all(promiseArray)
 })
 
 describe('Step 1 tests', () => {
@@ -111,7 +111,6 @@ describe('Step 3,4 and 5 tests', () => {
   })
   })
 
-  describe('Check if updating works')
 
 after(async () => {
     await mongoose.connection.close()
