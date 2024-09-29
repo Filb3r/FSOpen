@@ -2,4 +2,4 @@
 
 DONE: user.js model
 
--4.21: blogilistan laajennus, step 9 ----->
+-4.21: blogilistan laajennus, step 11 TESTIT ----->
