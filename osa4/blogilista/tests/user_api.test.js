@@ -4,7 +4,7 @@ const supertest= require('supertest')
 const app = require('../app')
 const assert = require('node:assert')
 const User = require('../models/user')
-
+const Blog = require('../models/blog')
 const api = supertest(app)
 
 const initialUsers = [
@@ -22,7 +22,8 @@ const initialUsers = [
 
 beforeEach(async() => {
     await User.deleteMany({})
-    console.log('cleared users')
+    await Blog.deleteMany({})
+    console.log('cleared users and blogs')
 
     const userObjects = initialUsers
         .map(user => new User(user))
