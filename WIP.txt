@@ -1,5 +1,5 @@
-------> Käyttäjien hallinta, TOKEN
+------> Kirjautuminen frontendissä osa 5
 
-DONE: user.js model
-
--4.21: blogilistan laajennus, step 11 TESTIT ----->
+-5.1: blogilistan frontend, step1
+    -login form DONE
+    -login service next->
