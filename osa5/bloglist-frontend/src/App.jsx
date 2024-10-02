@@ -2,12 +2,18 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Notification from './components/Notification'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
+  const [verifyMessage, setVerifyMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
   
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -35,8 +41,32 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
+      setErrorMessage('Wrong username or password!')
       console.log('wrong credentials')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, '3000')
     }
+  }
+
+  const handleCreate = async(event) => {
+    event.preventDefault()
+
+    try{
+      const blogPost = await blogService.postNew({title, author, url})
+      setVerifyMessage(blogPost.title)
+      setBlogs(blogs.concat(blogPost))
+      
+      setTitle('')
+      setAuthor('')
+      setUrl('')
+      setTimeout(() => {
+        setVerifyMessage(null)
+      }, '3000')
+    } catch (exception) {
+      console.log(exception)
+    }
+
   }
 
   const handleLogout = (event) => {
@@ -48,6 +78,7 @@ const App = () => {
   if(user === null){
     return (
       <div>
+        <Notification verifyMessage={verifyMessage} errorMessage={errorMessage}/>
         <h2>Log in to application</h2>
         <form onSubmit={handleLogin}>
           <div>
@@ -67,6 +98,7 @@ const App = () => {
   return (
     <div>
       <div>
+        <Notification verifyMessage={verifyMessage} errorMessage={errorMessage}/>
         {user.name} logged in!
         <button type="submit" onClick={(event) => handleLogout(event)}>Logout</button>
       </div>
@@ -74,6 +106,22 @@ const App = () => {
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
+      <form onSubmit={handleCreate}>
+        <div>
+          <h2>Create new</h2>
+            title
+            <input type="text" value={title} name="Title" onChange={({target}) => setTitle(target.value)}/>
+        </div>
+        <div>
+            author
+            <input type="text" value={author} name="Author" onChange={({target}) => setAuthor(target.value)}/>
+        </div>
+        <div>
+            url
+            <input type="text" value={url} name="Url" onChange={({target}) => setUrl(target.value)}/>
+        </div>
+        <button type="submit">create</button>    
+      </form>
     </div>
   )
 }

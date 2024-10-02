@@ -1,5 +1,4 @@
 ------> Kirjautuminen frontendissä osa 5
 
--5.1: blogilistan frontend, step1
-    -login form DONE
-    -createNewblog.jsx next->
+-5.1: blogilistan frontend, step4
+    -notit kun lisää blogin, muut rdy.

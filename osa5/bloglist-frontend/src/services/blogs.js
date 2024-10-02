@@ -12,4 +12,22 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
-export default { getAll, setToken }
+const postNew = async (blog) => {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": `${token}`
+    }
+  }
+
+  try {
+    const response = await axios.post(baseUrl, blog, config)
+    return response.data
+  } catch (error) {
+    console.error("Error posting new blog:", error)
+    return null
+  }
+}
+
+
+export default { getAll, setToken, postNew }
