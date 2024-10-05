@@ -1,4 +1,5 @@
 ------> Kirjautuminen frontendissä osa 5
 
--5.1: blogilistan frontend, step4
-    -notit kun lisää blogin, muut rdy.
+-5.8: blogilistan frontend, step8
+    -5.8: blogilistan frontend, step8 
+    -const handleLike

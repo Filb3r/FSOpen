@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
+import BlogAddForm from './components/BlogAddForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
   const [verifyMessage, setVerifyMessage] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
-  
+  const blogFormRef = useRef()
+
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
@@ -49,24 +49,32 @@ const App = () => {
     }
   }
 
-  const handleCreate = async(event) => {
+  const handleCreate = async(event, blogData) => {
     event.preventDefault()
 
     try{
-      const blogPost = await blogService.postNew({title, author, url})
-      setVerifyMessage(blogPost.title)
+      blogFormRef.current.toggleVisibility()
+      const blogPost = await blogService.postNew(blogData)
+      setVerifyMessage(`New blog created: ${blogPost.title}`)
       setBlogs(blogs.concat(blogPost))
-      
-      setTitle('')
-      setAuthor('')
-      setUrl('')
       setTimeout(() => {
         setVerifyMessage(null)
       }, '3000')
     } catch (exception) {
       console.log(exception)
     }
+  }
 
+  const handleLike = async(event, blogData) => {
+    event.preventDefault()
+
+    //TÄMÄ EI OLE KUNNOSSA VIELÄ!
+    try {
+      console.log('f')
+      console.log(blogData)
+    } catch (exception) {
+      console.log(exception)
+    }
   }
 
   const handleLogout = (event) => {
@@ -104,24 +112,13 @@ const App = () => {
       </div>
       <h2>blogs</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} handleLike={handleLike}/>
       )}
-      <form onSubmit={handleCreate}>
-        <div>
-          <h2>Create new</h2>
-            title
-            <input type="text" value={title} name="Title" onChange={({target}) => setTitle(target.value)}/>
-        </div>
-        <div>
-            author
-            <input type="text" value={author} name="Author" onChange={({target}) => setAuthor(target.value)}/>
-        </div>
-        <div>
-            url
-            <input type="text" value={url} name="Url" onChange={({target}) => setUrl(target.value)}/>
-        </div>
-        <button type="submit">create</button>    
-      </form>
+      <Togglable buttonLabel="Add new" ref={blogFormRef}>
+        <BlogAddForm
+          handleCreate={handleCreate}
+        />
+      </Togglable>
     </div>
   )
 }
