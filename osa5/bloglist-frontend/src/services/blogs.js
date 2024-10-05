@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/api/blogs'
+const baseUrl = '/api/blogs/'
 
 let token = null
 
@@ -12,7 +12,7 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
-const postNew = async (blog) => {
+const addBlog = async (blog) => {
   const config = {
     headers: {
       "Content-type": "application/json",
@@ -29,5 +29,38 @@ const postNew = async (blog) => {
   }
 }
 
+const updateBlog = async(blog) => {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": `${token}`
+    }
+  }
 
-export default { getAll, setToken, postNew }
+  try {
+    const response = await axios.put(baseUrl + blog.id, blog, config)
+    return response.data
+  } catch(error) {
+    console.log("Error updating blog: ", error)
+    return null
+  }
+}
+
+const removeBlog = async (blog) => {
+  const config = {
+    headers: {
+      "Authorization": `${token}`
+    }
+  }
+
+  try{
+    const response = await axios.delete(baseUrl + blog, config)
+    return response
+  } catch(error) {
+    console.log("Error deleting blog: ", error)
+    return null
+  }
+}
+
+
+export default { getAll, setToken, addBlog, updateBlog, removeBlog }

@@ -16,9 +16,10 @@ const App = () => {
   const blogFormRef = useRef()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+    blogService.getAll().then(blogs => {
+      blogs.sort((a,b) => b.likes - a.likes)
+      setBlogs(blogs)
+    })  
   }, [])
 
   useEffect(() => {
@@ -37,7 +38,9 @@ const App = () => {
       const user = await loginService.login({username, password})
 
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
+      console.log(user)
       setUser(user)
+      blogService.setToken(user.token)
       setUsername('')
       setPassword('')
     } catch (exception) {
@@ -49,12 +52,11 @@ const App = () => {
     }
   }
 
-  const handleCreate = async(event, blogData) => {
-    event.preventDefault()
+  const handleCreate = async(blogData) => {
 
     try{
       blogFormRef.current.toggleVisibility()
-      const blogPost = await blogService.postNew(blogData)
+      const blogPost = await blogService.addBlog(blogData)
       setVerifyMessage(`New blog created: ${blogPost.title}`)
       setBlogs(blogs.concat(blogPost))
       setTimeout(() => {
@@ -65,21 +67,33 @@ const App = () => {
     }
   }
 
-  const handleLike = async(event, blogData) => {
-    event.preventDefault()
-
-    //TÄMÄ EI OLE KUNNOSSA VIELÄ!
+  const handleLike = async(blogData) => {
     try {
-      console.log('f')
-      console.log(blogData)
+      await blogService.updateBlog(blogData)
+      setBlogs(blogs.map(b => (b.id === blogData.id ? blogData : b)))
     } catch (exception) {
       console.log(exception)
     }
   }
 
-  const handleLogout = (event) => {
-    event.preventDefault()
+  const handleRemove = async(blogToRemove) => {
+    try {
+      const response = await blogService.removeBlog(blogToRemove)
+      if(response != null) {
+        setBlogs(blogs.filter(blog => blog.id !== blogToRemove))
+        setVerifyMessage(`Blog id ${blogToRemove} removed!`)
+        setTimeout(() => {
+          setVerifyMessage(null)
+        }, '3000')
+      }
+    } catch(exception) {
+      console.log(exception)
+    }
+  }
+
+  const handleLogout = () => {
     window.localStorage.clear()
+    blogService.setToken(null)
     setUser(null)
   }
 
@@ -108,11 +122,11 @@ const App = () => {
       <div>
         <Notification verifyMessage={verifyMessage} errorMessage={errorMessage}/>
         {user.name} logged in!
-        <button type="submit" onClick={(event) => handleLogout(event)}>Logout</button>
+        <button type="submit" onClick={() => handleLogout()}>Logout</button>
       </div>
       <h2>blogs</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} handleLike={handleLike}/>
+        <Blog key={blog.id} blog={blog} handleLike={handleLike} handleRemove={handleRemove} user={user}/>
       )}
       <Togglable buttonLabel="Add new" ref={blogFormRef}>
         <BlogAddForm

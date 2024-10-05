@@ -7,8 +7,7 @@ const BlogAddForm = ({handleCreate}) => {
 
         const createNewBlog = (event) => {
             event.preventDefault()
-
-            handleCreate(event, {title, author, url})
+            handleCreate({title, author, url})
             setTitle('')
             setAuthor('')
             setUrl('')
