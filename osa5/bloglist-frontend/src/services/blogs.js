@@ -15,8 +15,8 @@ const getAll = () => {
 const addBlog = async (blog) => {
   const config = {
     headers: {
-      "Content-type": "application/json",
-      "Authorization": `${token}`
+      'Content-type': 'application/json',
+      'Authorization': `${token}`
     }
   }
 
@@ -24,7 +24,7 @@ const addBlog = async (blog) => {
     const response = await axios.post(baseUrl, blog, config)
     return response.data
   } catch (error) {
-    console.error("Error posting new blog:", error)
+    console.error('Error posting new blog:', error)
     return null
   }
 }
@@ -32,8 +32,8 @@ const addBlog = async (blog) => {
 const updateBlog = async(blog) => {
   const config = {
     headers: {
-      "Content-type": "application/json",
-      "Authorization": `${token}`
+      'Content-type': 'application/json',
+      'Authorization': `${token}`
     }
   }
 
@@ -41,7 +41,7 @@ const updateBlog = async(blog) => {
     const response = await axios.put(baseUrl + blog.id, blog, config)
     return response.data
   } catch(error) {
-    console.log("Error updating blog: ", error)
+    console.log('Error updating blog: ', error)
     return null
   }
 }
@@ -49,7 +49,7 @@ const updateBlog = async(blog) => {
 const removeBlog = async (blog) => {
   const config = {
     headers: {
-      "Authorization": `${token}`
+      'Authorization': `${token}`
     }
   }
 
@@ -57,7 +57,7 @@ const removeBlog = async (blog) => {
     const response = await axios.delete(baseUrl + blog, config)
     return response
   } catch(error) {
-    console.log("Error deleting blog: ", error)
+    console.log('Error deleting blog: ', error)
     return null
   }
 }

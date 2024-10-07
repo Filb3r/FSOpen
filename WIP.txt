@@ -1,5 +1,5 @@
 ------> Kirjautuminen frontendissä osa 5
 
 -5.8: blogilistan frontend, step8
-    -5.8: blogilistan frontend, step8 
-    -const handleLike
+    -props.children ja proptypet
+        -PropTypes
