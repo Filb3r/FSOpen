@@ -127,7 +127,7 @@ const App = () => {
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} handleLike={handleLike} handleRemove={handleRemove} user={user}/>
       )}
-      <Togglable buttonLabel="Add new" ref={blogFormRef}>
+      <Togglable buttonLabel="Add" ref={blogFormRef}>
         <BlogAddForm
           handleCreate={handleCreate}
         />
