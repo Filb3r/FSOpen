@@ -34,7 +34,7 @@ const BlogAddForm = ({ handleCreate }) => {
   )
 }
 
-BlogAddForm.PropTypes = {
+BlogAddForm.propTypes = {
   handleCreate: PropTypes.func.isRequired
 }
 

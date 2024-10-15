@@ -1,4 +1,5 @@
 ------> Kirjautuminen frontendissä osa 5
 
--5.8: Playwright
-    
+5.17: blogilistan end to end ‑testit, step1
+    -eka testi
+    -frontti j backki done
