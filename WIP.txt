@@ -1,5 +1,4 @@
 ------> Kirjautuminen frontendissä osa 5
 
-5.17: blogilistan end to end ‑testit, step1
-    -eka testi
-    -frontti j backki done
+5.20: blogilistan end to end ‑testit, step4
+    -function aloitettu
