@@ -10,6 +10,13 @@ describe('Blog app', () => {
         password: 'salainen'
       }
     })
+    await request.post('http://localhost:3003/api/users', {
+      data: {
+        name: 'Testin Tekija',
+        username: 'ttekija',
+        password: 'salasana'
+      }
+    })
 
     await page.goto('http://localhost:5173')
   })
@@ -68,9 +75,47 @@ describe('When logged in', () => {
   })
 
   test('a blog can be liked', async({page}) => {
-    await page.getByRole('button', {name: 'Show'}).click()
+    await page.getByRole('button', {name: 'Show'}).first().click()
+    
+    const likesDiv = await page.locator('[data-testid="likesDiv"]').first()
+    const likesTextBefore = await likesDiv.innerText()
+    const likesBefore = await parseInt(likesTextBefore)
 
     await page.getByRole('button', {name: 'like'}).click()
+    await page.waitForTimeout(500)
 
+    const likesTextAfter = await likesDiv.innerText()
+    const likesAfter = await parseInt(likesTextAfter)
+
+    expect(likesAfter).toBe(likesBefore + 1)
   }) 
+
+  test('User can delete their own blogpost', async({page}) => {
+    await page.getByRole('button', {name: 'Show'}).first().click()
+    await page.getByRole('button', {name: 'remove'}).click()
+
+    const confirmationDiv = await page.locator('.verify')
+    await expect(confirmationDiv).toContainText('Blog removed!')
+  })
+
+  test('only blog creator can see delete button', async({page}) => {
+    await page.getByRole('button', { name: 'Add'}).click()
+
+    await page.getByPlaceholder('Title').fill('How To Delete Blog')
+    await page.getByPlaceholder('Author').fill('B. Deletor')
+    await page.getByPlaceholder('URL').fill('www.deletethis.com')
+    await page.getByRole('button', { name: 'create'}).click()
+
+    await page.getByRole('button', { name: 'logout'}).click()
+
+    await page.getByRole('textbox').first().fill('ttekija')
+    await page.getByRole('textbox').last().fill('salasana')
+    await page.getByRole('button', { name: 'Login'}).click()
+
+    await page.getByRole('button', {name: 'Show'}).first().click()
+
+    const removeButton = await page.getByRole('button', {name: 'remove'})
+
+    await expect(removeButton).not.toBeVisible()
+  })
 })

@@ -44,7 +44,7 @@ const Blog = ({ blog, handleLike, handleRemove, user }) => {
       <button onClick={toggleVisibility}>{visible ? 'Hide' : 'Show'}</button>
       <div style={showMore}>
         <div>{blog.url}</div>
-        <div>
+        <div data-testid='likesDiv'>
           {blog.likes}
           <button onClick={likeBlog}>like</button>
         </div>

@@ -57,6 +57,7 @@ const App = () => {
       blogFormRef.current.toggleVisibility()
       const blogPost = await blogService.addBlog(blogData)
       setVerifyMessage(`New blog created: ${blogPost.title}`)
+      blogPost.user = user
       setBlogs(blogs.concat(blogPost))
       setTimeout(() => {
         setVerifyMessage(null)
@@ -80,7 +81,7 @@ const App = () => {
       const response = await blogService.removeBlog(blogToRemove)
       if(response !== null) {
         setBlogs(blogs.filter(blog => blog.id !== blogToRemove))
-        setVerifyMessage(`Blog id ${blogToRemove} removed!`)
+        setVerifyMessage('Blog removed!')
         setTimeout(() => {
           setVerifyMessage(null)
         }, '3000')
