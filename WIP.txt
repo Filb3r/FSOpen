@@ -1,1 +1,9 @@
 ------> Flux-arkkitehtuuri ja Redux osa 6
+    -Tehtävät 6.1.-6.2
+        -Toteuta reducer ja tee sille testit.
+
+Varmista testeissä deep-freeze-kirjaston avulla, että kyseessä on puhdas funktio. Huomaa, että valmiin ensimmäisen testin on syytä mennä läpi koska Redux olettaa, että reducer palauttaa järkevän alkutilan kun sitä kutsutaan siten että ensimmäinen parametri eli aiempaa tilaa edustava state on undefined.
+
+Aloita laajentamalla reduceria siten, että molemmat testeistä menevät läpi. Lisää tämän jälkeen loput testit ja niitä vastaava toiminnallisuus.
+
+Reducerin toteutuksessa kannattaa ottaa mallia yllä olevasta Redux-muistiinpanot-esimerkistä.
