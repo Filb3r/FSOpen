@@ -70,7 +70,9 @@ const App = () => {
   const handleLike = async(blogData) => {
     try {
       await blogService.updateBlog(blogData)
-      setBlogs(blogs.map(b => (b.id === blogData.id ? blogData : b)))
+      const updatedBlogs = blogs.map(b => (b.id === blogData.id ? blogData : b))
+      updatedBlogs.sort((a,b) => b.likes - a.likes)
+      setBlogs(updatedBlogs)
     } catch (exception) {
       console.log(exception)
     }

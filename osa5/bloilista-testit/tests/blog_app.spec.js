@@ -101,8 +101,8 @@ describe('When logged in', () => {
   test('only blog creator can see delete button', async({page}) => {
     await page.getByRole('button', { name: 'Add'}).click()
 
-    await page.getByPlaceholder('Title').fill('How To Delete Blog')
-    await page.getByPlaceholder('Author').fill('B. Deletor')
+    await page.getByPlaceholder('Title').fill('How To Delete a Blog')
+    await page.getByPlaceholder('Author').fill('B. Delete')
     await page.getByPlaceholder('URL').fill('www.deletethis.com')
     await page.getByRole('button', { name: 'create'}).click()
 
@@ -117,5 +117,32 @@ describe('When logged in', () => {
     const removeButton = await page.getByRole('button', {name: 'remove'})
 
     await expect(removeButton).not.toBeVisible()
+  })
+
+  test('blogs are in order, most liked blog is first', async({page}) => {
+    await page.getByRole('button', { name: 'Add'}).click()
+
+    await page.getByPlaceholder('Title').fill('How To Like a Blog')
+    await page.getByPlaceholder('Author').fill('B. Like')
+    await page.getByPlaceholder('URL').fill('www.likethis.com')
+    await page.getByRole('button', { name: 'create'}).click()
+
+    await page.waitForTimeout(500)
+    await page.getByRole('button', {name: 'Show'}).last().click()
+
+    await page.getByRole('button', {name: 'like'}).click()
+    await page.waitForTimeout(500)
+
+    await page.getByRole('button', {name: 'Show'}).first().click()
+
+    const firstLikesDiv = await page.locator('[data-testid="likesDiv"]').first()
+    const firstLikesText = await firstLikesDiv.innerText()
+    const firstLikes = await parseInt(firstLikesText)
+
+    const secondLikesDiv = await page.locator('[data-testid="likesDiv"]').last()
+    const secondLikesText = await secondLikesDiv.innerText()
+    const secondLikes = await parseInt(secondLikesText)
+
+    expect(firstLikes).toBeGreaterThan(secondLikes)
   })
 })
