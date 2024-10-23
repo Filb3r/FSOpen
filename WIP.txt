@@ -1,3 +1,2 @@
 ------> Flux-arkkitehtuuri ja Redux osa 6
-    -Tehtävät 6.3.-6.8.
-        -6.6: anekdootit, step4
+    -Redux Toolkit
