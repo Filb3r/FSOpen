@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Routes, Route, Link, useMatch, useNavigate } from 'react-router-dom'
+import { useField } from './hooks'
 
 const Menu = () => {
   const padding = {
@@ -65,19 +66,25 @@ const Notification = ({notification}) => {
 }
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
-
+  const content = useField('text')
+  const author = useField('text')
+  const info = useField('text')
 
   const handleSubmit = (e) => {
+    console.log(content.value)
     e.preventDefault()
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0
     })
+  }
+
+  const resetFields = () => {
+    content.resetField()
+    author.resetField()
+    info.resetField()
   }
 
   return (
@@ -86,17 +93,30 @@ const CreateNew = (props) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+         <input 
+         type={content.type}
+         value={content.value}
+         onChange={content.onChange}
+         />
         </div>
         <div>
           author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          <input 
+            type={author.type}
+            value={author.value}
+            onChange={author.onChange}
+            />
         </div>
         <div>
           url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
-        </div>
-        <button>create</button>
+          <input 
+          type={info.type}
+          value={info.value}
+          onChange={info.onChange}
+          />        
+        </div> 
+        <button type="submit">create</button>
+        <button type="button" onClick={resetFields}>reset</button>
       </form>
     </div>
   )
@@ -120,7 +140,6 @@ const App = () => {
       id: 2
     }
   ])
-
   const [notification, setNotification] = useState('')
   
   const Navigate = useNavigate()
