@@ -1,8 +1,10 @@
 import { useDispatch } from "react-redux";
 import { createNewAnecdote } from "../reducers/anecdoteReducer";
+import { useNavigate } from "react-router-dom";
 
 const CreateNewAnecdote = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -15,6 +17,7 @@ const CreateNewAnecdote = () => {
 
         console.log(content)
         dispatch(createNewAnecdote(content))
+        navigate('/')
     }
 
     return (

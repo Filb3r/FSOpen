@@ -33,11 +33,18 @@ const anecdoteSlice = createSlice({
             )
 
             return updatedList
+        },
+        removeAnecdote(state, action) {
+            const content = action.payload
+
+            const updatedList = state.filter((anecdote) => anecdote.id !== content.id)
+
+            return updatedList
         }
     }
 })
 
-export const { createAnecdote, updateAnecdote } = anecdoteSlice.actions
+export const { createAnecdote, updateAnecdote, removeAnecdote } = anecdoteSlice.actions
 
 export const createNewAnecdote = content => {
     return async dispatch => {

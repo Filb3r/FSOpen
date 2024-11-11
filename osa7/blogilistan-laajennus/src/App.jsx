@@ -1,48 +1,13 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { BrowserRouter as Router,
+  Routes, Route, Link, Navigate
+} from 'react-router-dom'
 import Notification from './components/Notification';
 import Anecdotes from './components/Anecdotes';
 import CreateNewAnecdote from './components/CreateNewAnecdote';
-
-const Menu = () => {
-  const padding = {
-    paddingRight: 5
-  };
-  return (
-    <div>
-      <a href="#" style={padding}>
-        anecdotes
-      </a>
-      <a href="#" style={padding}>
-        create new
-      </a>
-      <a href="#" style={padding}>
-        about
-      </a>
-    </div>
-  );
-};
-
-
-const About = () => (
-  <div>
-    <h2>About anecdote app</h2>
-    <p>According to Wikipedia:</p>
-
-    <em>
-      An anecdote is a brief, revealing account of an individual person or an incident. Occasionally
-      humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke
-      laughter but to reveal a truth more general than the brief tale itself, such as to
-      characterize a person by delineating a specific quirk or trait, to communicate an abstract
-      idea about a person, place, or thing through the concrete details of a short narrative. An
-      anecdote is "a story with a point."
-    </em>
-
-    <p>
-      Software engineering is full of excellent anecdotes, at this app you can find the best and add
-      more.
-    </p>
-  </div>
-);
+import About from './components/About'
+import Login from './components/Login'
 
 const Footer = () => (
   <div>
@@ -54,18 +19,34 @@ const Footer = () => (
   </div>
 );
 
-
 const App = () => {
+  const user = useSelector(state => state.user)
+
+  const padding = {
+    padding: 5
+  }
+
   return (
-    <div>
-      <h1>Software anecdotes</h1>
-      <Notification/>
-      <Menu />
-      <Anecdotes/>
-      <CreateNewAnecdote/>
-      <About />
-      <Footer />
-    </div>
+    <Router>
+      <div>
+        <h1>Software anecdotes</h1>
+        <Notification/>
+        <Link style={padding} to="/">home</Link>
+        <Link style={padding} to="/create">create new</Link>
+        <Link style={padding} to="/about">about</Link>
+        {user
+          ? <em>{user} logged in</em>
+          : <Link style={padding} to="/login">login</Link> 
+        }
+        <Routes>
+          <Route path="/" element={user ? <Anecdotes/> : <Navigate replace to="/login"/>}/>
+          <Route path="/create" element={user ? <CreateNewAnecdote/>: <Navigate replace to="/login"/>}/>
+          <Route path="/about" element={<About/>}/>
+          <Route path="/login" element={<Login />}/>
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 };
 

@@ -1,4 +1,6 @@
 ------> Osa 7
-    -->7.12: Redux, step3
-        Laajenna ratkaisua siten, että blogien "liketys" ja poisto toimivat.
-            ---> Reducer valmis (?), painike sivulle puuttuu
+        ---->7.14: käyttäjien näkymä
+                Tee sovellukseen näkymä, joka näyttää kaikkiin käyttäjiin liittyvät perustiedot:
+                --->/users sivu
+                --->anecdootteihin kirjautuneen userin tieto
+                
