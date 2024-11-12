@@ -9,7 +9,7 @@ const Anecdotes = () => {
     })
 
     const vote = (anecdote) => {
-        dispatch(voteAnecdote(anecdote))
+        dispatch(voteAnecdote(anecdote))   
     }
 
     const deleteAnecdote = (anecdote) => {

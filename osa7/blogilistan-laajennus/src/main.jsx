@@ -5,13 +5,15 @@ import { configureStore } from '@reduxjs/toolkit'
 import notificationReducer  from './reducers/notificationReducer'
 import anecdoteReducer from './reducers/anecdoteReducer'
 import userReducer from './reducers/userReducer'
+import usersReducer from './reducers/usersReducer'
 import App from './App';
 
 const store = configureStore({
     reducer: {
         notification: notificationReducer,
         anecdotes: anecdoteReducer,
-        user: userReducer
+        user: userReducer,
+        users: usersReducer
     }
 })
 

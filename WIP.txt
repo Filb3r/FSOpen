@@ -1,6 +1,6 @@
 ------> Osa 7
         ---->7.14: käyttäjien näkymä
                 Tee sovellukseen näkymä, joka näyttää kaikkiin käyttäjiin liittyvät perustiedot:
-                --->/users sivu
+                --->/users sivu --------> WIP Users component
                 --->anecdootteihin kirjautuneen userin tieto
-                
+                ---> usersReducer, lista usereista tehty>>

@@ -20,11 +20,12 @@ const Footer = () => (
 );
 
 const App = () => {
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user.currentUser)
 
   const padding = {
     padding: 5
   }
+
 
   return (
     <Router>
@@ -34,8 +35,9 @@ const App = () => {
         <Link style={padding} to="/">home</Link>
         <Link style={padding} to="/create">create new</Link>
         <Link style={padding} to="/about">about</Link>
+        <Link style={padding} to="/users">users</Link>
         {user
-          ? <em>{user} logged in</em>
+          ? <em>{user.username} logged in</em>
           : <Link style={padding} to="/login">login</Link> 
         }
         <Routes>
@@ -43,6 +45,7 @@ const App = () => {
           <Route path="/create" element={user ? <CreateNewAnecdote/>: <Navigate replace to="/login"/>}/>
           <Route path="/about" element={<About/>}/>
           <Route path="/login" element={<Login />}/>
+          <Route path="/users" element={<About/>}/>
         </Routes>
         <Footer />
       </div>

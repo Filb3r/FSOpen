@@ -1,14 +1,24 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setUser } from "../reducers/userReducer"
 import { useNavigate } from "react-router-dom"
+import { addUser } from '../reducers/usersReducer'
 
 const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const users = useSelector((state) => state.users)
 
     const handleLogin = (event) => {
         event.preventDefault()
-        dispatch(setUser(event.target.username.value))
+
+        const username = event.target.username.value
+
+        if(!users.find((user) => user.username === username)){
+            dispatch(addUser(username))
+        }
+
+        dispatch(setUser({username}))
+
         navigate('/')
     }
 
