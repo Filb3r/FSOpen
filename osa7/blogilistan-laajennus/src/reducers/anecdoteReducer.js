@@ -5,14 +5,22 @@ const initialState = [{
     author: 'Jez Humble',
     info: 'https://martinfowler.com/bliki/FrequencyReducesDifficulty.html',
     votes: 0,
-    id: 1
+    id: 1,
+    user: {
+        username: 'timo',
+        id: 2
+    }
   },
   {
     content: 'Premature optimization is the root of all evil',
     author: 'Donald Knuth',
     info: 'http://wiki.c2.com/?PrematureOptimization',
     votes: 0,
-    id: 2
+    id: 2,
+    user: {
+        username: 'timo',
+        id: 2
+    }
   }]
 
 const anecdoteSlice = createSlice({
@@ -46,13 +54,14 @@ const anecdoteSlice = createSlice({
 
 export const { createAnecdote, updateAnecdote, removeAnecdote } = anecdoteSlice.actions
 
-export const createNewAnecdote = content => {
+export const createNewAnecdote = (content, user) => {
     return async dispatch => {
 
       const newAnecdote = {
         ...content,
         id: Math.floor(Math.random() * 10000),
-        votes: 0 
+        votes: 0,
+        user
       }
       dispatch(createAnecdote(newAnecdote))
     }

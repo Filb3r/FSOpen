@@ -8,6 +8,7 @@ import Anecdotes from './components/Anecdotes';
 import CreateNewAnecdote from './components/CreateNewAnecdote';
 import About from './components/About'
 import Login from './components/Login'
+import Users from './components/Users'
 
 const Footer = () => (
   <div>
@@ -45,7 +46,7 @@ const App = () => {
           <Route path="/create" element={user ? <CreateNewAnecdote/>: <Navigate replace to="/login"/>}/>
           <Route path="/about" element={<About/>}/>
           <Route path="/login" element={<Login />}/>
-          <Route path="/users" element={<About/>}/>
+          <Route path="/users" element={<Users/>}/>
         </Routes>
         <Footer />
       </div>

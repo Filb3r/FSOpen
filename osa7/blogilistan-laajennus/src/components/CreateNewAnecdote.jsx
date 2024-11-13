@@ -1,10 +1,12 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createNewAnecdote } from "../reducers/anecdoteReducer";
 import { useNavigate } from "react-router-dom";
+import { addBlogToUser } from "../reducers/usersReducer";
 
 const CreateNewAnecdote = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const user = useSelector(state => state.user.currentUser)
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -15,8 +17,8 @@ const CreateNewAnecdote = () => {
             url: event.target.info.value
         }
 
-        console.log(content)
-        dispatch(createNewAnecdote(content))
+        dispatch(createNewAnecdote(content, user))
+        dispatch(addBlogToUser({username: user, blog: content}))
         navigate('/')
     }
 
