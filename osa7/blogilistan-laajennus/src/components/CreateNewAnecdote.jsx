@@ -18,7 +18,7 @@ const CreateNewAnecdote = () => {
         }
 
         dispatch(createNewAnecdote(content, user))
-        dispatch(addBlogToUser({username: user, blog: content}))
+        dispatch(addBlogToUser({username: user.username, blog: content}))
         navigate('/')
     }
 

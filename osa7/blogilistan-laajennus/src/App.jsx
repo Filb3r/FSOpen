@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router,
   Routes, Route, Link, Navigate
 } from 'react-router-dom'
@@ -9,6 +8,7 @@ import CreateNewAnecdote from './components/CreateNewAnecdote';
 import About from './components/About'
 import Login from './components/Login'
 import Users from './components/Users'
+import { logoutUser } from './reducers/userReducer'
 
 const Footer = () => (
   <div>
@@ -22,6 +22,7 @@ const Footer = () => (
 
 const App = () => {
   const user = useSelector(state => state.user.currentUser)
+  const dispatch = useDispatch()
 
   const padding = {
     padding: 5
@@ -38,7 +39,7 @@ const App = () => {
         <Link style={padding} to="/about">about</Link>
         <Link style={padding} to="/users">users</Link>
         {user
-          ? <em>{user.username} logged in</em>
+          ? <em>{user.username} logged in <button onClick={() => dispatch(logoutUser())}>logout</button> </em>
           : <Link style={padding} to="/login">login</Link> 
         }
         <Routes>
