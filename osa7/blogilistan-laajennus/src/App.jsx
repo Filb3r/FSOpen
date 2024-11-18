@@ -8,6 +8,8 @@ import CreateNewAnecdote from './components/CreateNewAnecdote';
 import About from './components/About'
 import Login from './components/Login'
 import Users from './components/Users'
+import User from './components/User'
+import Anecdote from './components/Anecdote'
 import { logoutUser } from './reducers/userReducer'
 
 const Footer = () => (
@@ -22,12 +24,14 @@ const Footer = () => (
 
 const App = () => {
   const user = useSelector(state => state.user.currentUser)
+  const users = useSelector(state => state.users)
+  const anecdotes = useSelector(state => state.anecdotes)
+  
   const dispatch = useDispatch()
 
   const padding = {
     padding: 5
   }
-
 
   return (
     <Router>
@@ -43,11 +47,13 @@ const App = () => {
           : <Link style={padding} to="/login">login</Link> 
         }
         <Routes>
-          <Route path="/" element={user ? <Anecdotes/> : <Navigate replace to="/login"/>}/>
+          <Route path="/" element={user ? <Anecdotes anecdotes={anecdotes}/> : <Navigate replace to="/login"/>}/>
           <Route path="/create" element={user ? <CreateNewAnecdote/>: <Navigate replace to="/login"/>}/>
           <Route path="/about" element={<About/>}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/users" element={<Users/>}/>
+          <Route path="/users/:id" element={<User users={users}/>}/>
+          <Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdotes}/>}/>
         </Routes>
         <Footer />
       </div>

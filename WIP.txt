@@ -1,5 +1,5 @@
 ------> Osa 7
         ---->7.14: käyttäjien näkymä
                 Tee sovellukseen näkymä, joka näyttää kaikkiin käyttäjiin liittyvät perustiedot:
-                --->anecdootteihin kirjautuneen userin tieto
-                --> users anecdoottien createdBlogs ei päivity lisäämisen yhteydessä
+                ---> anecdote.jsx comments osio kesken!!
+                        -->teht 7.18

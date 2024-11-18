@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { createNewAnecdote } from "../reducers/anecdoteReducer";
 import { useNavigate } from "react-router-dom";
-import { addBlogToUser } from "../reducers/usersReducer";
+import { addAnecdoteToUser } from "../reducers/usersReducer";
 
 const CreateNewAnecdote = () => {
     const dispatch = useDispatch()
@@ -18,7 +18,7 @@ const CreateNewAnecdote = () => {
         }
 
         dispatch(createNewAnecdote(content, user))
-        dispatch(addBlogToUser({username: user.username, blog: content}))
+        dispatch(addAnecdoteToUser({username: user.username, anecdote: content}))
         navigate('/')
     }
 

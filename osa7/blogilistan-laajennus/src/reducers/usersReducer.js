@@ -4,12 +4,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = [{
     username: 'pekka',
     id: 1,
-    createdBlogs: []
+    createdAnecdotes: []
     },
     {
       username: 'timo',
       id: 2,
-      createdBlogs: [
+      createdAnecdotes: [
         {
             content: 'Premature optimization is the root of all evil',
             author: 'Donald Knuth',
@@ -44,19 +44,19 @@ const usersSlice = createSlice({
             state.push({
                 username: action.payload,
                 id: usersId,
-                createdBlogs: []
+                createdAnecdotes: []
             })
         },
-        addBlogToUser(state, action) {
-            const { username, blog } = action.payload
+        addAnecdoteToUser(state, action) {
+            const { username, anecdote } = action.payload
             const user = state.find(user => user.username === username)
             if(user){
-                user.createdBlogs.push(blog)
+                user.createdAnecdotes.push(anecdote)
             }
         }
     }
 })
 
-export const { addUser, addBlogToUser } = usersSlice.actions
+export const { addUser, addAnecdoteToUser } = usersSlice.actions
 
 export default usersSlice.reducer
