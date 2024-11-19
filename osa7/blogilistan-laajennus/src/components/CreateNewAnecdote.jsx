@@ -38,7 +38,7 @@ const CreateNewAnecdote = () => {
             url for more info
             <input name="info" />
             </div>
-            <button>create</button>
+            <button type="submit">create</button>
         </form>
         </div>
         )

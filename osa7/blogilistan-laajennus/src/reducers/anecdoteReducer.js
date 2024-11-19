@@ -9,7 +9,11 @@ const initialState = [{
     user: {
         username: 'timo',
         id: 2
-    }
+    },
+    comments: [
+        "Makia!",
+        "Hieno!"
+    ]
   },
   {
     content: 'Premature optimization is the root of all evil',
@@ -20,7 +24,10 @@ const initialState = [{
     user: {
         username: 'timo',
         id: 2
-    }
+    },
+    comments: [
+        "!!!!"
+    ]
   }]
 
 const anecdoteSlice = createSlice({
@@ -48,11 +55,18 @@ const anecdoteSlice = createSlice({
             const updatedList = state.filter((anecdote) => anecdote.id !== content.id)
 
             return updatedList
+        },
+        addComment(state, action) {
+            const { id, comment } = action.payload
+
+            const anecdote = state.find(anecdote => anecdote.id === id)
+
+            anecdote.comments.push(comment)
         }
     }
 })
 
-export const { createAnecdote, updateAnecdote, removeAnecdote } = anecdoteSlice.actions
+export const { createAnecdote, updateAnecdote, removeAnecdote, addComment } = anecdoteSlice.actions
 
 export const createNewAnecdote = (content, user) => {
     return async dispatch => {
