@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const anecdoteRoute = require('./routes/anecdotes')
 
+app.use(express.json())
+
 app.get('/', (request, response) => {
     response.send('Hello!')
 })
