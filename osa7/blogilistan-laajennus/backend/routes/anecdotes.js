@@ -101,4 +101,15 @@ anecdoteRouter.put('/:id', (request, response) => {
     response.json(updatedAnecdote)
 })
 
+anecdoteRouter.delete('/:id', (request, response) => {
+    const id = Number(request.params.id)
+
+    const updatedAnecdotes = anecdoteJson.filter(anecdote => anecdote.id !== id)
+
+    anecdoteJson.length = 0
+    anecdoteJson.push(...updatedAnecdotes)
+
+    response.status(204).end()
+})
+
 module.exports = anecdoteRouter

@@ -3,3 +3,7 @@
                 Tee sovellukseen näkymä, joka näyttää kaikkiin käyttäjiin liittyvät perustiedot:
                 ---> 7.20: tyylit, step1
                         Tee sovelluksesi ulkoasusta tyylikkäämpi jotain kurssilla esiteltyä tapaa käyttäen
+
+
+        -----> BACKEND
+                ->anecdotes.js id/comments get ja post.

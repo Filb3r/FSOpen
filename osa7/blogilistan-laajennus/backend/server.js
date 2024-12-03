@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express()
 const anecdoteRoute = require('./routes/anecdotes')
+const middleware = require('./utils/middleware')
 
 app.use(express.json())
+app.use(middleware.requestLogger)
 
 app.get('/', (request, response) => {
     response.send('Hello!')
