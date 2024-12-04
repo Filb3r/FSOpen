@@ -48,6 +48,20 @@ anecdoteRouter.get('/:id', (request, response) => {
     response.json(anecdoteToFind)
 })
 
+anecdoteRouter.get('/:id/comments', (request, response) => {
+    const id = Number(request.params.id)
+
+    const anecdoteToFind = anecdoteJson.find(anecdote => anecdote.id === id)
+
+    if(!anecdoteToFind){
+        return response.status(404).json({
+            error: 'Anecdote not found'
+        })
+    }
+
+    response.json(anecdoteToFind.comments)
+})
+
 anecdoteRouter.post('/', (request, response) => {
     if (!request.body) {
         return response.status(400).json({ 
@@ -76,6 +90,29 @@ anecdoteRouter.post('/', (request, response) => {
     anecdoteJson.push(newAnecdote)
 
     response.status(201).json(newAnecdote)
+})
+
+anecdoteRouter.post('/:id/comments', (request, response) => {
+    const id = Number(request.params.id)
+    const { comment } = request.body
+
+    if(!comment) {
+        return response.status(400).json({
+            error: 'Content is required!'
+        })
+    }
+
+    const anecdoteToUpdate = anecdoteJson.find(anecdote => anecdote.id === id)
+
+    if(!anecdoteToUpdate){
+        return response.status(400).json({
+            error: 'Anecdote not found!'
+        })
+    }
+
+    anecdoteToUpdate.comments.push(comment)
+
+    response.status(201).json(anecdoteToUpdate.comments)
 })
 
 anecdoteRouter.put('/:id', (request, response) => {

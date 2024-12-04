@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const anecdoteRoute = require('./routes/anecdotes')
+const anecdoteRouter = require('./routes/anecdotes')
 const middleware = require('./utils/middleware')
 
 app.use(express.json())
@@ -10,7 +10,7 @@ app.get('/', (request, response) => {
     response.send('Hello!')
 })
 
-app.use('/anecdotes', anecdoteRoute)
+app.use('/anecdotes', anecdoteRouter)
 
 const port = process.env.PORT || 3000
 
