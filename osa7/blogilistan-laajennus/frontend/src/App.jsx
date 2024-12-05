@@ -13,7 +13,9 @@ import Anecdote from './components/Anecdote'
 import { logoutUser } from './reducers/userReducer'
 import { useEffect } from 'react';
 import anecdoteService from './services/anecdotes'
+import userService from './services/users'
 import { setAnecdotes } from './reducers/anecdoteReducer'
+import { setUsers } from './reducers/usersReducer'
 
 const Footer = () => (
   <div>
@@ -39,6 +41,16 @@ const App = () => {
   })
   .catch(error => {
     console.error('Failed to fetch anecdotes:', error)
+    })
+  }, [])
+
+  useEffect(() => {
+    userService.getAll()
+    .then(users => {
+      dispatch(setUsers(users))
+    })
+    .catch(error => {
+      console.error('Failed to fetch users:', error)
     })
   }, [])
 

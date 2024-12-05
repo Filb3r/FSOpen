@@ -2,10 +2,7 @@ import { useParams } from "react-router-dom"
 
 const User = ({users}) => {
     const userParam = useParams().username
-    console.log(userParam)
     const user = users.find(user => user.username == userParam)
-
-    console.log(users)
 
     if(!user){
         return null

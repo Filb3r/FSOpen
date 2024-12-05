@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const anecdoteRouter = require('./routes/anecdotes')
+const usersRouter = require('./routes/users')
 const middleware = require('./utils/middleware')
 const cors = require('cors')
 
@@ -13,6 +14,7 @@ app.get('/', (request, response) => {
 })
 
 app.use('/anecdotes', anecdoteRouter)
+app.use('/users', usersRouter)
 
 const port = process.env.PORT || 3000
 
