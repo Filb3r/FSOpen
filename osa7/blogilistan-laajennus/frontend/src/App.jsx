@@ -11,6 +11,9 @@ import Users from './components/Users'
 import User from './components/User'
 import Anecdote from './components/Anecdote'
 import { logoutUser } from './reducers/userReducer'
+import { useEffect } from 'react';
+import anecdoteService from './services/anecdotes'
+import { setAnecdotes } from './reducers/anecdoteReducer'
 
 const Footer = () => (
   <div>
@@ -28,6 +31,16 @@ const App = () => {
   const anecdotes = useSelector(state => state.anecdotes)
   
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    anecdoteService.getAll()
+    .then(anecdotes => {
+    dispatch(setAnecdotes(anecdotes))
+  })
+  .catch(error => {
+    console.error('Failed to fetch anecdotes:', error)
+    })
+  }, [])
 
   const padding = {
     padding: 5
@@ -52,7 +65,7 @@ const App = () => {
           <Route path="/about" element={<About/>}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/users" element={<Users/>}/>
-          <Route path="/users/:id" element={<User users={users}/>}/>
+          <Route path="/users/:username" element={<User users={users}/>}/>
           <Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdotes}/>}/>
         </Routes>
         <Footer />

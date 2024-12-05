@@ -3,12 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [{
     username: 'pekka',
-    id: 1,
     createdAnecdotes: []
     },
     {
       username: 'timo',
-      id: 2,
       createdAnecdotes: []
     }
 ]
@@ -18,10 +16,8 @@ const usersSlice = createSlice({
     initialState,
     reducers: {
         addUser(state, action) {
-            let usersId = Math.floor(Math.random() * 10000)
             state.push({
                 username: action.payload,
-                id: usersId,
                 createdAnecdotes: []
             })
         },

@@ -2,7 +2,9 @@ const express = require('express')
 const app = express()
 const anecdoteRouter = require('./routes/anecdotes')
 const middleware = require('./utils/middleware')
+const cors = require('cors')
 
+app.use(cors())
 app.use(express.json())
 app.use(middleware.requestLogger)
 

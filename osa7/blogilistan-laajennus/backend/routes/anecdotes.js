@@ -31,6 +31,12 @@ const anecdoteJson = [{
     ]
   }]
 
+const generateId = () => {
+    return anecdoteJson.length > 0
+    ? Math.max(...anecdoteJson.map(n => n.id)) + 1
+    : 1    
+}
+
 anecdoteRouter.get('/', (request,response) => {
     response.json(anecdoteJson)
 })
@@ -63,6 +69,7 @@ anecdoteRouter.get('/:id/comments', (request, response) => {
 })
 
 anecdoteRouter.post('/', (request, response) => {
+    console.log(request.body)
     if (!request.body) {
         return response.status(400).json({ 
             error: 'Request body is missing' 
@@ -80,11 +87,11 @@ anecdoteRouter.post('/', (request, response) => {
     const newAnecdote = {
         content: body.content,
         author: body.author,
-        info: body.info || '',
-        votes: 0,
-        id: body.id,
+        info: body.url || '',
+        votes: body.votes,
+        id: generateId(),
         user: body.user,
-        comments: []
+        comments: body.comments
     }
 
     anecdoteJson.push(newAnecdote)

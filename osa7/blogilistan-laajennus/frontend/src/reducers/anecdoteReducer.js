@@ -32,11 +32,14 @@ const anecdoteSlice = createSlice({
             const anecdote = state.find(anecdote => anecdote.id === id)
 
             anecdote.comments.push(comment)
+        },
+        setAnecdotes(state, action) {
+            return action.payload
         }
     }
 })
 
-export const { createAnecdote, updateAnecdote, removeAnecdote, addComment } = anecdoteSlice.actions
+export const { createAnecdote, updateAnecdote, removeAnecdote, addComment, setAnecdotes } = anecdoteSlice.actions
 
 export const createNewAnecdote = (content, user) => {
     return async dispatch => {
