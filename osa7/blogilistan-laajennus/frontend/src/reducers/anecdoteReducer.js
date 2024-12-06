@@ -41,16 +41,16 @@ const anecdoteSlice = createSlice({
 
 export const { createAnecdote, updateAnecdote, removeAnecdote, addComment, setAnecdotes } = anecdoteSlice.actions
 
-export const createNewAnecdote = (content, user) => {
+export const createNewAnecdote = (content) => {
     return async dispatch => {
 
       const newAnecdote = {
         ...content,
         id: Math.floor(Math.random() * 10000),
         votes: 0,
-        user,
         comments: []
       }
+      
       dispatch(createAnecdote(newAnecdote))
     }
 }

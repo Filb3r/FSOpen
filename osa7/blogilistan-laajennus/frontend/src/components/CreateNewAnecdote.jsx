@@ -3,6 +3,7 @@ import { createNewAnecdote } from "../reducers/anecdoteReducer";
 import { useNavigate } from "react-router-dom";
 import { addAnecdoteToUser } from "../reducers/usersReducer";
 import anecdoteService from '../services/anecdotes'
+import userService from '../services/users'
 
 const CreateNewAnecdote = () => {
     const dispatch = useDispatch()
@@ -12,17 +13,23 @@ const CreateNewAnecdote = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        console.log(currentUser)
+
         const content = {
             content: event.target.content.value,
             author: event.target.author.value,
-            url: event.target.info.value
+            url: event.target.info.value,
+            user: currentUser
         }
 
         const newAnecdote = await anecdoteService.createNew(content, currentUser)
-        console.log(newAnecdote)
-        dispatch(createNewAnecdote(newAnecdote))
-        dispatch(addAnecdoteToUser({username:currentUser.username, anecdote: content}))
-        navigate('/')
+        await userService.postComment(content, currentUser)
+        
+        if(newAnecdote){
+            dispatch(createNewAnecdote(newAnecdote))
+            dispatch(addAnecdoteToUser({username:currentUser.username, anecdote: content}))
+            navigate('/')
+        }
     }
 
     return (

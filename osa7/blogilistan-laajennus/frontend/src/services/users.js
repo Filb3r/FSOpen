@@ -7,4 +7,9 @@ const getAll = async () => {
     return response.data
 }
 
-export default { getAll }
+const postComment = async (content, user) => {
+    const response = await axios.post(`${baseUrl}/${user.username}/anecdotes`, content)
+    return response.data
+}
+
+export default { getAll, postComment }

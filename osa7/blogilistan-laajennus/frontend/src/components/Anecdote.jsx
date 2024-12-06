@@ -7,7 +7,6 @@ const Anecdote = ({anecdotes}) => {
     const id = useParams().id
     const anecdote = anecdotes.find(anecdote => anecdote.id == id)
 
-
     const vote = (anecdote) => {
         dispatch(voteAnecdote(anecdote))   
     }

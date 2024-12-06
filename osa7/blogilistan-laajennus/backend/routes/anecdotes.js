@@ -8,8 +8,7 @@ const anecdoteJson = [{
     votes: 0,
     id: 1,
     user: {
-        username: 'timo',
-        id: 2
+        username: 'timo'
     },
     comments: [
         "Makia!",
@@ -23,8 +22,7 @@ const anecdoteJson = [{
     votes: 0,
     id: 2,
     user: {
-        username: 'timo',
-        id: 2
+        username: 'timo'
     },
     comments: [
         "!!!!"
@@ -69,7 +67,6 @@ anecdoteRouter.get('/:id/comments', (request, response) => {
 })
 
 anecdoteRouter.post('/', (request, response) => {
-    console.log(request.body)
     if (!request.body) {
         return response.status(400).json({ 
             error: 'Request body is missing' 

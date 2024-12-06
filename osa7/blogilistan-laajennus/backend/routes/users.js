@@ -14,8 +14,7 @@ const usersJson = [{
         votes: 0,
         id: 1,
         user: {
-            username: 'timo',
-            id: 2
+            username: 'timo'
         },
         comments: [
             "Makia!",
@@ -29,8 +28,7 @@ const usersJson = [{
         votes: 0,
         id: 2,
         user: {
-            username: 'timo',
-            id: 2
+            username: 'timo'
         },
         comments: [
             "!!!!"
@@ -41,6 +39,19 @@ const usersJson = [{
 
 usersRouter.get('/', (request, response) => {
     response.json(usersJson)
+})
+
+usersRouter.get('/:username', (request, response) => {
+    const username = request.params.username
+    const userToFind = usersJson.find(user => user.username === username)
+
+    if(!userToFind){
+        return response.status(404).json({
+            error: 'User not found!'
+        })
+    }
+
+    response.json(userToFind)
 })
 
 usersRouter.post('/', (request, response) => {
@@ -59,6 +70,25 @@ usersRouter.post('/', (request, response) => {
     usersJson.push(newUser)
 
     response.status(201).json(newUser)
+})
+
+usersRouter.post('/:username/anecdotes', (request, response) => {
+    const username = request.params.username
+    const anecdote  = request.body
+
+    console.log(anecdote)
+
+    const userToUpdate = usersJson.find(user => user.username === username)
+
+    if(!userToUpdate){
+        return response.status(400).json({
+            error: 'User not found!'
+        })
+    }
+
+    userToUpdate.createdAnecdotes.push(anecdote)
+
+    response.status(201).json(userToUpdate.createdAnecdotes)
 })
 
 
