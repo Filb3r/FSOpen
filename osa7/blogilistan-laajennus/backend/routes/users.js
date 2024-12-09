@@ -1,41 +1,7 @@
 const express = require('express')
 const usersRouter = express.Router()
 
-const usersJson = [{
-    username: 'pekka',
-    createdAnecdotes: []
-    },
-    {
-      username: 'timo',
-      createdAnecdotes: [{
-        content: 'If it hurts, do it more often',
-        author: 'Jez Humble',
-        info: 'https://martinfowler.com/bliki/FrequencyReducesDifficulty.html',
-        votes: 0,
-        id: 1,
-        user: {
-            username: 'timo'
-        },
-        comments: [
-            "Makia!",
-            "Hieno!"
-        ]
-      },
-      {
-        content: 'Premature optimization is the root of all evil',
-        author: 'Donald Knuth',
-        info: 'http://wiki.c2.com/?PrematureOptimization',
-        votes: 0,
-        id: 2,
-        user: {
-            username: 'timo'
-        },
-        comments: [
-            "!!!!"
-        ]
-      }]
-    }
-]
+const usersJson = require('../utils/userData')
 
 usersRouter.get('/', (request, response) => {
     response.json(usersJson)
@@ -75,8 +41,6 @@ usersRouter.post('/', (request, response) => {
 usersRouter.post('/:username/anecdotes', (request, response) => {
     const username = request.params.username
     const anecdote  = request.body
-
-    console.log(anecdote)
 
     const userToUpdate = usersJson.find(user => user.username === username)
 

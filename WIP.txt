@@ -5,6 +5,5 @@
                         Tee sovelluksesi ulkoasusta tyylikkäämpi jotain kurssilla esiteltyä tapaa käyttäen
 
                         --->Frontti
-                                ---> usersReduceriin lisätyt anecdootit käynnistyessä
-                                        --users backendiin ?
+                                ---> JSONwebtoken, backend asennettu
                                         

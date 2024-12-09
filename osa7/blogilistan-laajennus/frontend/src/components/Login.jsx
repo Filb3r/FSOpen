@@ -2,18 +2,23 @@ import { useDispatch, useSelector } from "react-redux"
 import { setUser } from "../reducers/userReducer"
 import { useNavigate } from "react-router-dom"
 import { addUser } from '../reducers/usersReducer'
+import userService from '../services/users'
 
 const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const users = useSelector((state) => state.users)
 
-    const handleLogin = (event) => {
+    const handleLogin = async(event) => {
         event.preventDefault()
 
         const username = event.target.username.value
 
         if(!users.find((user) => user.username === username)){
+            const newUser = {
+                "username": username
+            }
+            await userService.addUser(newUser)
             dispatch(addUser(username))
         }
 

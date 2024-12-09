@@ -7,9 +7,21 @@ const getAll = async () => {
     return response.data
 }
 
-const postComment = async (content, user) => {
-    const response = await axios.post(`${baseUrl}/${user.username}/anecdotes`, content)
+const addAnecdote = async (content, user) => {
+    const parsedContent = {
+        content: content.content,
+        author: content.author,
+        url: content.url,
+        id: content.id
+    };
+
+    const response = await axios.post(`${baseUrl}/${user.username}/anecdotes`, parsedContent)
     return response.data
 }
 
-export default { getAll, postComment }
+const addUser = async (content) => {
+    const response = await axios.post(baseUrl, content)
+    return response.data
+}
+
+export default { getAll, addAnecdote, addUser }

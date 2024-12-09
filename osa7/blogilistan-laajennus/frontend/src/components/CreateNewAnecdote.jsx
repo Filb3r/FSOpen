@@ -13,17 +13,18 @@ const CreateNewAnecdote = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        console.log(currentUser)
-
         const content = {
             content: event.target.content.value,
             author: event.target.author.value,
             url: event.target.info.value,
-            user: currentUser
+            user: currentUser,
+            votes: 0,
+            id: Math.floor(Math.random() * 10000),
+            comments: []
         }
 
         const newAnecdote = await anecdoteService.createNew(content, currentUser)
-        await userService.postComment(content, currentUser)
+        await userService.addAnecdote(content, currentUser)
         
         if(newAnecdote){
             dispatch(createNewAnecdote(newAnecdote))

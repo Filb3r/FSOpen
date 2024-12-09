@@ -1,19 +1,22 @@
 import { useParams } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { voteAnecdote, addComment } from "../reducers/anecdoteReducer"
+import anecdoteService from "../services/anecdotes"
 
 const Anecdote = ({anecdotes}) => {
     const dispatch = useDispatch()
     const id = useParams().id
     const anecdote = anecdotes.find(anecdote => anecdote.id == id)
 
-    const vote = (anecdote) => {
+    const vote = async(anecdote) => {
+        await anecdoteService.addVote(anecdote, id)
         dispatch(voteAnecdote(anecdote))   
     }
 
-    const handleaddComment = (event) => {
+    const handleaddComment = async(event) => {
         event.preventDefault()
         const comment = event.target.comment.value
+        await anecdoteService.addComment(comment, id)
         dispatch(addComment({id: anecdote.id , comment}))
         event.target.comment.value = ''
     }
@@ -32,7 +35,7 @@ const Anecdote = ({anecdotes}) => {
 
             <ul>
             {anecdote.comments.map(comment => 
-                <li key={comment.id}>{comment}</li>
+                <li key={comment}>{comment}</li>
             )}
             </ul>
         </div>

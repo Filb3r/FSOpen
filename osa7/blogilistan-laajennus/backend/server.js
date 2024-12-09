@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const anecdoteRouter = require('./routes/anecdotes')
 const usersRouter = require('./routes/users')
+const loginRouter = require('./routes/login')
 const middleware = require('./utils/middleware')
 const cors = require('cors')
 

@@ -46,7 +46,6 @@ export const createNewAnecdote = (content) => {
 
       const newAnecdote = {
         ...content,
-        id: Math.floor(Math.random() * 10000),
         votes: 0,
         comments: []
       }
