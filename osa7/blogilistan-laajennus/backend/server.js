@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+require('dotenv').config()
 const anecdoteRouter = require('./routes/anecdotes')
 const usersRouter = require('./routes/users')
 const loginRouter = require('./routes/login')
@@ -16,6 +17,7 @@ app.get('/', (request, response) => {
 
 app.use('/anecdotes', anecdoteRouter)
 app.use('/users', usersRouter)
+app.use('/login', loginRouter)
 
 const port = process.env.PORT || 3000
 

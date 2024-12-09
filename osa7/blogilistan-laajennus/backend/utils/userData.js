@@ -2,6 +2,7 @@ const usersJson = [
     {
       username: 'pekka',
       createdAnecdotes: [],
+      password: 'testi'
     },
     {
       username: 'timo',

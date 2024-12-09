@@ -4,8 +4,20 @@ const jwt = require('jsonwebtoken')
 
 const usersJson = require('../utils/userData')
 
-loginRouter.post('/login', (request, response) => {
+loginRouter.post('/', (request, response) => {
     const { username, password } = request.body
 
-    //const user 
+    console.log('Login route hit', request.body);
+
+    const user = usersJson.find(user => user.username === username && user.password === password)
+
+    if(!user) {
+        return response.status(401).json({ error: 'invalid credentials!' })
+    }
+
+    const token = jwt.sign({ username: user.username, id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+
+    response.json({ token })
 })
+
+module.exports = loginRouter

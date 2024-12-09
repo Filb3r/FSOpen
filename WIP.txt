@@ -5,5 +5,5 @@
                         Tee sovelluksesi ulkoasusta tyylikkäämpi jotain kurssilla esiteltyä tapaa käyttäen
 
                         --->Frontti
-                                ---> JSONwebtoken, backend asennettu
+                                ---> JSONwebtoken rdy, sivu ladattaessa ei pysy kirjautuneena FIX
                                         

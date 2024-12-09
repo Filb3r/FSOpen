@@ -17,6 +17,7 @@ import userService from './services/users'
 import { setAnecdotes } from './reducers/anecdoteReducer'
 import { setUsers } from './reducers/usersReducer'
 
+
 const Footer = () => (
   <div>
     Anecdote app for <a href="https://fullstackopen.com/">Full Stack Open</a>. See{' '}
@@ -35,6 +36,7 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+
     anecdoteService.getAll()
     .then(anecdotes => {
     dispatch(setAnecdotes(anecdotes))
