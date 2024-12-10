@@ -26,7 +26,7 @@ const Anecdote = ({anecdotes}) => {
             <h2>{anecdote.content}</h2>
             <a href={anecdote.info}>{anecdote.info}</a>
             <div>{anecdote.votes} likes <button onClick={() => vote(anecdote)}>like</button></div>
-            <div>added by {anecdote.user.username}</div> 
+            <div>added by {anecdote.user}</div> 
             <h3>comments</h3>
             <form onSubmit={handleaddComment}>
                 <input name="comment" />

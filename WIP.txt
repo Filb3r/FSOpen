@@ -5,5 +5,5 @@
                         Tee sovelluksesi ulkoasusta tyylikkäämpi jotain kurssilla esiteltyä tapaa käyttäen
 
                         --->Frontti
-                                ---> JSONwebtoken rdy, sivu ladattaessa ei pysy kirjautuneena FIX
-                                        
+                                ---> user create mahdollisuus
+                                ---> UI tyylitys

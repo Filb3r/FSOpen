@@ -10,6 +10,14 @@ const CreateNewAnecdote = () => {
     const navigate = useNavigate()
     const currentUser = useSelector(state => state.user.currentUser)
 
+    if(!currentUser) {
+        return (
+            <div>
+                Please log in!
+            </div>
+        )
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -28,7 +36,7 @@ const CreateNewAnecdote = () => {
         
         if(newAnecdote){
             dispatch(createNewAnecdote(newAnecdote))
-            dispatch(addAnecdoteToUser({username:currentUser.username, anecdote: content}))
+            dispatch(addAnecdoteToUser({username: currentUser, anecdote: content}))
             navigate('/')
         }
     }

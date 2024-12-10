@@ -9,25 +9,7 @@ const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const users = useSelector((state) => state.users)
-
-    const handleLogin = async(event) => {
-        event.preventDefault()
-
-        const username = event.target.username.value
-        const password = event.target.password.value
-
-        if(!users.find((user) => user.username === username)){
-            const newUser = {
-                "username": username
-            }
-            await userService.addUser(newUser)
-            dispatch(addUser(username))
-        }
-
-        dispatch(setUser({username}))
-
-        navigate('/')
-    }
+    const user = useSelector((state) => state.user)
 
     const handleLoginNew = async(event) => {
         event.preventDefault()
@@ -46,11 +28,11 @@ const Login = () => {
             const loginResponse = await loginService.login(username, password)
 
             if(loginResponse.token) {
-                console.log(loginResponse)
                 dispatch(setUser({
-                    username: loginResponse.username,
+                    username: username,
                     token: loginResponse.token
                 }))
+                navigate('/')
             } else {
                 console.error("Invalid login credentials.")
             }
@@ -58,7 +40,6 @@ const Login = () => {
             console.log('Login failed', error)
         }
 
-        navigate('/')
     }
 
     return(

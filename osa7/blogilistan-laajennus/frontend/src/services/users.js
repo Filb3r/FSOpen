@@ -15,7 +15,7 @@ const addAnecdote = async (content, user) => {
         id: content.id
     };
 
-    const response = await axios.post(`${baseUrl}/${user.username}/anecdotes`, parsedContent)
+    const response = await axios.post(`${baseUrl}/${user}/anecdotes`, parsedContent)
     return response.data
 }
 

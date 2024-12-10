@@ -7,8 +7,6 @@ const usersJson = require('../utils/userData')
 loginRouter.post('/', (request, response) => {
     const { username, password } = request.body
 
-    console.log('Login route hit', request.body);
-
     const user = usersJson.find(user => user.username === username && user.password === password)
 
     if(!user) {

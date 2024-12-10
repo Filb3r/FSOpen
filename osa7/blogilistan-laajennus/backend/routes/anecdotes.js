@@ -7,9 +7,7 @@ const anecdoteJson = [{
     info: 'https://martinfowler.com/bliki/FrequencyReducesDifficulty.html',
     votes: 0,
     id: 1,
-    user: {
-        username: 'timo'
-    },
+    user: 'timo',
     comments: [
         "Makia!",
         "Hieno!"
@@ -21,9 +19,7 @@ const anecdoteJson = [{
     info: 'http://wiki.c2.com/?PrematureOptimization',
     votes: 0,
     id: 2,
-    user: {
-        username: 'timo'
-    },
+    user: 'timo',
     comments: [
         "!!!!"
     ]

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router,
-  Routes, Route, Link, Navigate
+  Routes, Route, Link
 } from 'react-router-dom'
 import Notification from './components/Notification';
 import Anecdotes from './components/Anecdotes';
@@ -16,7 +16,8 @@ import anecdoteService from './services/anecdotes'
 import userService from './services/users'
 import { setAnecdotes } from './reducers/anecdoteReducer'
 import { setUsers } from './reducers/usersReducer'
-
+import { jwtDecode} from 'jwt-decode'
+import { setUser } from './reducers/userReducer'
 
 const Footer = () => (
   <div>
@@ -36,7 +37,19 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    const token = localStorage.getItem('authToken')
 
+    if(token){
+      const decodedToken = jwtDecode(token)
+
+      dispatch(setUser({
+        username: decodedToken.username,
+        token: token
+      }))
+    }
+  }, [dispatch])
+
+  useEffect(() => {
     anecdoteService.getAll()
     .then(anecdotes => {
     dispatch(setAnecdotes(anecdotes))
@@ -44,7 +57,7 @@ const App = () => {
   .catch(error => {
     console.error('Failed to fetch anecdotes:', error)
     })
-  }, [])
+  }, [user])
 
   useEffect(() => {
     userService.getAll()
@@ -60,6 +73,11 @@ const App = () => {
     padding: 5
   }
 
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    localStorage.removeItem('authToken');
+  }
+
   return (
     <Router>
       <div>
@@ -70,12 +88,12 @@ const App = () => {
         <Link style={padding} to="/about">about</Link>
         <Link style={padding} to="/users">users</Link>
         {user
-          ? <em>{user.username} logged in <button onClick={() => dispatch(logoutUser())}>logout</button> </em>
+          ? <em>{user} logged in <button onClick={() => handleLogout()}>logout</button> </em>
           : <Link style={padding} to="/login">login</Link> 
         }
         <Routes>
-          <Route path="/" element={user ? <Anecdotes anecdotes={anecdotes}/> : <Navigate replace to="/login"/>}/>
-          <Route path="/create" element={user ? <CreateNewAnecdote/>: <Navigate replace to="/login"/>}/>
+          <Route path="/" element={<Anecdotes anecdotes={anecdotes}/>}/>
+          <Route path="/create" element={<CreateNewAnecdote/>}/>
           <Route path="/about" element={<About/>}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/users" element={<Users/>}/>
@@ -85,7 +103,7 @@ const App = () => {
         <Footer />
       </div>
     </Router>
-  );
-};
+  )
+}
 
 export default App;

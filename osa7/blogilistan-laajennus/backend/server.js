@@ -15,8 +15,8 @@ app.get('/', (request, response) => {
     response.send('Hello!')
 })
 
-app.use('/anecdotes', anecdoteRouter)
-app.use('/users', usersRouter)
+app.use('/anecdotes', middleware.authenticate, anecdoteRouter)
+app.use('/users',  usersRouter)
 app.use('/login', loginRouter)
 
 const port = process.env.PORT || 3000
