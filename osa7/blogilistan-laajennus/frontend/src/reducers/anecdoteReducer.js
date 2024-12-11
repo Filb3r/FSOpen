@@ -46,7 +46,6 @@ export const createNewAnecdote = (content) => {
 
       const newAnecdote = {
         ...content,
-        votes: 0,
         comments: []
       }
       

@@ -21,21 +21,23 @@ usersRouter.get('/:username', (request, response) => {
 })
 
 usersRouter.post('/', (request, response) => {
-    if(!request.body) {
+    const body = request.body
+
+    if(!body.username || !body.password) {
         return response.status(400).json({
-            error: 'Request body missing!'
+            error: 'Username or password missing!'
         })
     }
-    const body = request.body
 
     const newUser = {
         username: body.username,
+        password: body.password,
         createdAnecdotes: []
     }
 
     usersJson.push(newUser)
 
-    response.status(201).json(newUser)
+    response.status(201).json({...newUser, registered: true})
 })
 
 usersRouter.post('/:username/anecdotes', (request, response) => {

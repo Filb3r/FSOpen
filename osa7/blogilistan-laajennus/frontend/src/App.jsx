@@ -18,6 +18,7 @@ import { setAnecdotes } from './reducers/anecdoteReducer'
 import { setUsers } from './reducers/usersReducer'
 import { jwtDecode} from 'jwt-decode'
 import { setUser } from './reducers/userReducer'
+import { setNotification } from './reducers/notificationReducer'
 
 const Footer = () => (
   <div>
@@ -33,7 +34,7 @@ const App = () => {
   const user = useSelector(state => state.user.currentUser)
   const users = useSelector(state => state.users)
   const anecdotes = useSelector(state => state.anecdotes)
-  
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -50,13 +51,15 @@ const App = () => {
   }, [dispatch])
 
   useEffect(() => {
-    anecdoteService.getAll()
-    .then(anecdotes => {
-    dispatch(setAnecdotes(anecdotes))
-  })
-  .catch(error => {
-    console.error('Failed to fetch anecdotes:', error)
+    if(user){
+      anecdoteService.getAll()
+      .then(anecdotes => {
+      dispatch(setAnecdotes(anecdotes))
     })
+    .catch(error => {
+      console.error('Failed to fetch anecdotes:', error)
+      })
+    }
   }, [user])
 
   useEffect(() => {
@@ -80,7 +83,7 @@ const App = () => {
 
   return (
     <Router>
-      <div>
+      <div className='container'>
         <h1>Software anecdotes</h1>
         <Notification/>
         <Link style={padding} to="/">home</Link>

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { addAnecdoteToUser } from "../reducers/usersReducer";
 import anecdoteService from '../services/anecdotes'
 import userService from '../services/users'
+import { setNotification } from "../reducers/notificationReducer";
 
 const CreateNewAnecdote = () => {
     const dispatch = useDispatch()
@@ -36,6 +37,7 @@ const CreateNewAnecdote = () => {
         
         if(newAnecdote){
             dispatch(createNewAnecdote(newAnecdote))
+            dispatch(setNotification(`Added new anecdote: ${content.content}`, 2))
             dispatch(addAnecdoteToUser({username: currentUser, anecdote: content}))
             navigate('/')
         }
