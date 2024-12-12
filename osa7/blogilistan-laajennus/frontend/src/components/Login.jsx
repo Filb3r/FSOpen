@@ -33,7 +33,7 @@ const Login = () => {
                 console.error("Invalid login credentials.")
             }
         } catch (error) {
-            console.log('Login failed', error)
+            dispatch(setNotification('Failed to log in, check user/passoword!', 2))
         }
     }
 
@@ -60,6 +60,8 @@ const Login = () => {
             } catch (error) {
                 console.log('register failed', error)
             }
+        } else {
+            dispatch(setNotification('Failed to register, username may exist already!', 2))
         }
 
     }

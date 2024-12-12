@@ -1,24 +1,28 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router,
   Routes, Route, Link
 } from 'react-router-dom'
-import Notification from './components/Notification';
-import Anecdotes from './components/Anecdotes';
-import CreateNewAnecdote from './components/CreateNewAnecdote';
+import Anecdotes from './components/Anecdotes'
+import CreateNewAnecdote from './components/CreateNewAnecdote'
 import About from './components/About'
 import Login from './components/Login'
 import Users from './components/Users'
 import User from './components/User'
 import Anecdote from './components/Anecdote'
 import { logoutUser } from './reducers/userReducer'
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 import anecdoteService from './services/anecdotes'
 import userService from './services/users'
 import { setAnecdotes } from './reducers/anecdoteReducer'
 import { setUsers } from './reducers/usersReducer'
 import { jwtDecode} from 'jwt-decode'
 import { setUser } from './reducers/userReducer'
-import { setNotification } from './reducers/notificationReducer'
+import { setNotification } from "./reducers/notificationReducer"
+import { Alert } from 'react-bootstrap'
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Button from 'react-bootstrap/Button'
+
 
 const Footer = () => (
   <div>
@@ -34,6 +38,7 @@ const App = () => {
   const user = useSelector(state => state.user.currentUser)
   const users = useSelector(state => state.users)
   const anecdotes = useSelector(state => state.anecdotes)
+  const notification = useSelector(state => state.notification)
 
   const dispatch = useDispatch()
 
@@ -47,6 +52,8 @@ const App = () => {
         username: decodedToken.username,
         token: token
       }))
+    } else {
+      dispatch(logoutUser())
     }
   }, [dispatch])
 
@@ -78,22 +85,45 @@ const App = () => {
 
   const handleLogout = () => {
     dispatch(logoutUser());
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('authToken')
+    dispatch(setNotification(`Logged out!`, 2))
   }
 
   return (
     <Router>
       <div className='container'>
         <h1>Software anecdotes</h1>
-        <Notification/>
-        <Link style={padding} to="/">home</Link>
-        <Link style={padding} to="/create">create new</Link>
-        <Link style={padding} to="/about">about</Link>
-        <Link style={padding} to="/users">users</Link>
-        {user
-          ? <em>{user} logged in <button onClick={() => handleLogout()}>logout</button> </em>
-          : <Link style={padding} to="/login">login</Link> 
-        }
+        {(notification &&
+          <Alert variant="success">
+            {notification}
+          </Alert>
+        )}
+        <Navbar collapseOnSelect='lg' bg='dark' variant='dark'>
+          <Navbar.Toggle aria-controls='responsive-navbar-nav'/>
+          <Navbar.Collapse id='responsive-navbar-nav'>
+            <Nav className='mr-auto'>
+              <Nav.Link href='#' as='span'>
+                <Link style={padding} to="/">home</Link>
+              </Nav.Link>
+              <Nav.Link href='#' as='span'>
+                <Link style={padding} to="/create">create new</Link>
+              </Nav.Link>
+              <Nav.Link href='#' as='span'>
+               <Link style={padding} to="/about">about</Link>
+              </Nav.Link>
+              <Nav.Link href='#' as='span'>
+                <Link style={padding} to="/users">users</Link>
+              </Nav.Link>
+              </Nav>
+              </Navbar.Collapse>
+              <Navbar.Text>
+                {user
+                  ? <em>{user} logged in <Button variant='outline-success' onClick={() => handleLogout()}>logout</Button> </em>
+                  : <Button variant='outline-success'><Link style={padding} to="/login">login</Link></Button>
+                }
+              </Navbar.Text>
+        
+        </Navbar>
         <Routes>
           <Route path="/" element={<Anecdotes anecdotes={anecdotes}/>}/>
           <Route path="/create" element={<CreateNewAnecdote/>}/>
