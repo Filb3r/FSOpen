@@ -1,1 +1,2 @@
-------> Osa 7 DONE
+------> Osa 8
+        ----->asennettu serveri
