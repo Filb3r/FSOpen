@@ -1,2 +1,4 @@
 ------> Osa 8
         ----->asennettu serveri
+                -->8.16 käyttäjä ja kirjautuminen
+Lisää järjestelmään käyttäjienhallinta. Laajenna skeemaa seuraavasti:
