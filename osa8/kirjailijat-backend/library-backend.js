@@ -95,7 +95,7 @@ const resolvers = {
         }
       }
       if(args.genres){
-        filters.genres = { $in: args.genres}
+        filters.genres = { $in: args.genres }
       }
 
       if (args.published) {
@@ -138,7 +138,8 @@ const resolvers = {
       const book = new Book({...args, author: author._id})
       
       try {
-        return book.save()
+        await book.save()
+        return book.populate('author')
       } catch (error) {
         throw new GraphQLError('Saving book failed', {
           extensions: {
@@ -212,7 +213,8 @@ startStandaloneServer(server, {
   listen: { port: 4000 },
   context: async({ req, res }) => {
     const auth = req ? req.headers.authorization : null
-    if(auth && auth.startsWith('Bearer ')) {
+
+    if(auth && auth.startsWith('bearer ')) {
       const decodedToken = jwt.verify(
         auth.substring(7), process.env.JWT_SECRET
       )

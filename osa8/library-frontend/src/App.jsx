@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
-import Authors from "./components/Authors";
-import Books from "./components/Books";
-import NewBook from "./components/NewBook";
+import { useState, useEffect } from "react"
+import Authors from "./components/Authors"
+import Books from "./components/Books"
+import NewBook from "./components/NewBook"
 import LoginForm from "./components/LoginForm"
-import { useApolloClient } from "@apollo/client";
+import Recommended from "./components/Recommended"
+import { useApolloClient } from "@apollo/client"
 
 const App = () => {
   const [page, setPage] = useState("authors")
@@ -34,6 +35,7 @@ const App = () => {
         <button onClick={() => setPage("authors")}>authors</button>
         <button onClick={() => setPage("books")}>books</button>
         {token && <button onClick={() => setPage("add")}>add book</button>}
+        {token && <button onClick={() => setPage("recommend")}>recommend</button>}
         <button onClick={handleClick}>{token ? 'logout' : 'login'}</button>
       </div>
 
@@ -42,6 +44,8 @@ const App = () => {
       <Books show={page === "books"} />
 
       <NewBook show={page === "add"} />
+
+      <Recommended show={page === "recommend"}/>
 
       <LoginForm show={page === "login"} setToken={setToken} setPage={setPage}/>
     </div>
