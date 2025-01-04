@@ -16,6 +16,7 @@ query allBooks($author: String, $genres: [String], $published: Int) {
     name
     },
     id
+    genres
   }
 }
 `
