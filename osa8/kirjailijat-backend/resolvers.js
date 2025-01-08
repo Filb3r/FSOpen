@@ -33,6 +33,7 @@ const resolvers = {
       return Book.find(filters).populate('author')
     },
     allAuthors: async (root, args) => {
+      console.log('allAuthors check')
       return Author.find({})
     },
     me: (root, args, context) => {
@@ -41,6 +42,7 @@ const resolvers = {
   },
   Author: {
     bookCount: async ({ _id }) => {
+      console.log('bookCount check')
       const count = await Book.countDocuments({ author: _id })
       return count
     }
@@ -77,10 +79,12 @@ const resolvers = {
           }
         })
       }
+      
+      const populatedBook = await book.populate('author')
 
-      pubsub.publish('BOOK_ADDED', { bookAdded: book})
+      pubsub.publish('BOOK_ADDED', { bookAdded: populatedBook})
 
-      return book.populate('author')
+      return populatedBook
     },
     editAuthor: async (root, args, context) => {
       const author = await Author.findOne({ name: args.name })

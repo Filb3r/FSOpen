@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useQuery } from '@apollo/client'
-import { ALL_BOOKS } from '../queries' 
+import { useQuery, useSubscription } from '@apollo/client'
+import { ALL_BOOKS, BOOK_ADDED } from '../queries' 
 
 const Books = (props) => {
   const [filter, setFilter] = useState(null)
@@ -13,6 +13,12 @@ const Books = (props) => {
       refetch()
     }
   },[filter])
+
+  useSubscription(BOOK_ADDED,  {
+    onData: ({ data }) => {
+      refetch()
+    }
+  }) 
   
   if (!props.show) {
     return null

@@ -1,2 +1,2 @@
 ------> Osa 8
-         -->8.25: Subscriptionit client, osa 2
+         -->8.26: n+1
