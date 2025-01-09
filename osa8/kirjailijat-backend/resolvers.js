@@ -22,6 +22,7 @@ const resolvers = {
           filters.author = author._id 
         }
       }
+
       if(args.genres){
         filters.genres = { $in: args.genres }
       }
@@ -41,10 +42,10 @@ const resolvers = {
     }
   },
   Author: {
-    bookCount: async ({ _id }) => {
-      console.log('bookCount check')
-      const count = await Book.countDocuments({ author: _id })
-      return count
+    bookCount: async ({ _id }, _, { bookCountLoader }) => {
+
+      const books = await bookCountLoader.load(_id.toString())
+      return books.length
     }
   },
   Mutation: {

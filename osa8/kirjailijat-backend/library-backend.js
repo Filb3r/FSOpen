@@ -13,6 +13,7 @@ const jwt = require('jsonwebtoken')
 mongoose.set('strictQuery', false)
 
 const User = require('./models/user')
+const bookCountLoader = require('./loaders/bookCountLoader')
 
 const typeDefs = require('./schema')
 const resolvers = require('./resolvers')
@@ -66,8 +67,11 @@ const start = async () => {
         if(auth && auth.startsWith('bearer ')) {
           const decodedToken = jwt.verify(auth.substring(7), process.env.JWT_SECRET)
           const currentUser = await User.findById(decodedToken.id)
-          return { currentUser }
+          return { currentUser,
+            bookCountLoader: bookCountLoader(),
+           }
         }
+        return { bookCountLoader: bookCountLoader() }
       },
     }),
   )
