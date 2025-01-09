@@ -34,7 +34,6 @@ const resolvers = {
       return Book.find(filters).populate('author')
     },
     allAuthors: async (root, args) => {
-      console.log('allAuthors check')
       return Author.find({})
     },
     me: (root, args, context) => {
