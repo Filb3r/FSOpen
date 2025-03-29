@@ -8,9 +8,6 @@ interface Result {
     average: number;
 }
 
-const parseArguments = (args: string) => {
-    
-}
 
 const calculateExercises = (trainingHours : number[], targetHours : number) => {
     const tulokset: Result = {
@@ -41,4 +38,4 @@ const calculateExercises = (trainingHours : number[], targetHours : number) => {
 };
 
 
-calculateExercises(process.argv[3], process.argv[4])
+//calculateExercises(process.argv[3], process.argv[4])
