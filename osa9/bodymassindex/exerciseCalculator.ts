@@ -8,8 +8,26 @@ interface Result {
     average: number;
 }
 
+interface ExerciseValues {
+    targetHourValue: number;
+    trainingHoursValue: number[];
+}
 
-const calculateExercises = (trainingHours : number[], targetHours : number) => {
+const parseTrainingArguments = (args: string[]): ExerciseValues => {
+    if (args.length < 4) throw new Error('Not enough arguments');
+    let trainingHourArray: number[] = [];
+
+    for (let i : number = 3; i < args.length; i++) {
+        if (!isNaN(Number(args[i]))) {
+            trainingHourArray.push(Number(args[i]))
+        }
+    }
+
+    return { targetHourValue: Number(args[2]), trainingHoursValue: trainingHourArray};
+}
+
+
+const calculateExercises = (targetHours : number, trainingHours : number[]) => {
     const tulokset: Result = {
         periodLength: trainingHours.length,
         trainingDays: trainingHours.filter((trainingDay) => trainingDay > 0).length,
@@ -37,5 +55,12 @@ const calculateExercises = (trainingHours : number[], targetHours : number) => {
    console.log(tulokset)
 };
 
-
-//calculateExercises(process.argv[3], process.argv[4])
+try {
+    const { targetHourValue, trainingHoursValue} = parseTrainingArguments(process.argv);
+    calculateExercises(targetHourValue, trainingHoursValue);
+} catch (error : unknown) {
+    let errorMessage = 'Something bad happend!'
+    if (error instanceof Error) {
+        errorMessage += 'Error: ' + error.message;
+    }
+}
