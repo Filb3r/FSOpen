@@ -15,19 +15,19 @@ interface ExerciseValues {
 
 const parseTrainingArguments = (args: string[]): ExerciseValues => {
     if (args.length < 4) throw new Error('Not enough arguments');
-    let trainingHourArray: number[] = [];
+    const trainingHourArray: number[] = [];
 
     for (let i : number = 3; i < args.length; i++) {
         if (!isNaN(Number(args[i]))) {
-            trainingHourArray.push(Number(args[i]))
+            trainingHourArray.push(Number(args[i]));
         }
     }
 
     return { targetHourValue: Number(args[2]), trainingHoursValue: trainingHourArray};
-}
+};
 
 
-const calculateExercises = (targetHours : number, trainingHours : number[]) => {
+const calculateExercises = (targetHours : number, trainingHours : number[]): Result => {
     const tulokset: Result = {
         periodLength: trainingHours.length,
         trainingDays: trainingHours.filter((trainingDay) => trainingDay > 0).length,
@@ -52,15 +52,18 @@ const calculateExercises = (targetHours : number, trainingHours : number[]) => {
     tulokset.ratingDescription = "Bad!";
    }
 
-   console.log(tulokset)
+   return tulokset;
 };
 
 try {
     const { targetHourValue, trainingHoursValue} = parseTrainingArguments(process.argv);
     calculateExercises(targetHourValue, trainingHoursValue);
 } catch (error : unknown) {
-    let errorMessage = 'Something bad happend!'
+    let errorMessage = 'Something bad happend!';
     if (error instanceof Error) {
         errorMessage += 'Error: ' + error.message;
+        console.log(errorMessage);
     }
 }
+
+export default calculateExercises;
