@@ -1,2 +1,2 @@
-------> Osa 8
-         -->8.26: n+1
+------> Osa 9
+        ----> 9.11 Patient utility type.
