@@ -1,6 +1,6 @@
 import diagnosesData from '../data/diagnoses.ts';
 
-import { Diagnosis } from '../types/DiagnosisType.ts';
+import { Diagnosis } from '../types/types.ts';
 
 const diagnoses: Diagnosis[] = diagnosesData;
 

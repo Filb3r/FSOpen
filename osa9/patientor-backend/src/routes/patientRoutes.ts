@@ -1,13 +1,10 @@
-import patientData from '../data/patients.ts';
+import express from 'express';
+import patientService from '../services/patientService';
 
-import { Patient } from '../types/types.ts';
+const router = express.Router();
 
-const patients: Patient[] = patientData;
+router.get('/patients', (_req, res) => {
+    res.send(patientService.getNonSensitivePatients());
+});
 
-const getPatients = () => {
-    return patients;
-};
-
-export default {
-    getPatients
-};
+export default router;
