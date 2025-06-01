@@ -37,6 +37,4 @@ const Part = (props: CoursePartProps) => {
     }
 }
 
-//THIS NEEDS MORE CASES!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 export default Part;
