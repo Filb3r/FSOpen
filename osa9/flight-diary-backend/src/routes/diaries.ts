@@ -20,7 +20,7 @@ router.get('/:id', (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
+router.post('/addDiary', (req, res) => {
   try {
     const newDiaryEntry = toNewDiaryEntry(req.body);
     const addedEntry = diaryService.addDiary(newDiaryEntry);
@@ -29,6 +29,8 @@ router.post('/', (req, res) => {
     let errorMessage = 'Something went wrong.';
     if (error instanceof Error) {
       errorMessage += ' Error: ' + error.message;
+      console.log(errorMessage)
+      console.log(req.body)
     }
     res.status(400).send(errorMessage);
   }

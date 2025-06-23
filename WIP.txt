@@ -1,5 +1,5 @@
 ------> Osa 9
-        ----> 9.18
-                ---->Frontin lisääminen, formi vain tehty
+        ----> 9.19
+                ---->
 
                 https://react-typescript-cheatsheet.netlify.app/docs/basic/setup/

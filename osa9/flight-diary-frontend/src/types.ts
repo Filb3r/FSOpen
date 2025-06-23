@@ -3,4 +3,5 @@ export interface Diary {
   date: string;
   weather: string;
   visibility: string;
+  comment?: string;
 }
