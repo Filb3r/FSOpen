@@ -8,6 +8,7 @@ const App = () => {
   const [visibility, setVisibility] = useState('');
   const [weather, setWeather] = useState('');
   const [comment, setComment] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     axios.get<Diary[]>('http://localhost:3000/api/diaries').then(response => {
@@ -18,8 +19,6 @@ const App = () => {
 
   const diaryCreation = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    console.log(date, visibility, weather);
-
     const newDiary: Omit<Diary, 'id'> = {
       date,
       visibility,
@@ -30,24 +29,54 @@ const App = () => {
     axios.post<Diary>('http://localhost:3000/api/diaries/addDiary', newDiary )
       .then(response => {
         setDiaries(diaries.concat(response.data))
+      }) 
+      .catch(error => {
+        setErrorMessage(error.response.data);
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 4000);
       })
   }
 
   return (
     <>
       <h2>Add new entry</h2>
+      <h2 style={{ color: 'red'}}>{errorMessage}</h2>
       <form onSubmit={diaryCreation}>
           <label>
             Date: 
-            <input type="text" name="name" onChange={(e) => setDate(e.target.value)}/>
+            <input
+            type="date"
+            id="pvm"
+            name="pvm"
+            value={date}
+            min="2025-06-01"
+            onChange={(e) => setDate(e.target.value)}
+            />
           </label><br/>
           <label>
-            Visibility: 
-            <input type="text" name="name" onChange={(e) => setVisibility(e.target.value)}/>
+            Visibility:
+            great <input type="radio" name="visibility"
+            onChange={() => setVisibility('great')} />
+            good <input type="radio" name="visibility"
+            onChange={() => setVisibility('good')} />
+            ok <input type="radio" name="visibility"
+            onChange={() => setVisibility('ok')} />
+            poor <input type="radio" name="visibility"
+            onChange={() => setVisibility('poor')} />
           </label><br/>
           <label>
             Weather: 
-            <input type="text" name="name" onChange={(e) => setWeather(e.target.value)}/>
+            sunny <input type="radio" name="weather"
+            onChange={() => setWeather('sunny')} />
+            rainy <input type="radio" name="weather"
+            onChange={() => setWeather('rainy')} />
+            cloudy <input type="radio" name="weather"
+            onChange={() => setWeather('cloudy')} />
+            stormy <input type="radio" name="weather"
+            onChange={() => setWeather('stormy')} />
+            windy <input type="radio" name="weather"
+            onChange={() => setWeather('windy')} />
           </label><br/>
           <label>
             Comment: 
